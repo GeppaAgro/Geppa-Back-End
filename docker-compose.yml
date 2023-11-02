@@ -1,0 +1,39 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: geppa
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    networks:
+      - geppa-network
+
+  back-end-boletins-informativos:
+    build:
+      context: ./BoletinsInformativos
+      dockerfile: Dockerfile
+    image: back-end-boletins-informativos:latest
+    restart: always
+    ports:
+      - 80:80
+    command: mvn spring-boot:run
+    networks:
+      - geppa-network
+    depends_on:
+      - db
+    working_dir: /BoletinsInformativos
+    environment:
+      - spring.datasource.url=jdbc:postgresql://db:5432/geppa
+      - spring.datasource.username=postgres
+      - spring.datasource.password=postgres
+    volumes:
+      - ./BoletinsInformativos:/BoletinsInformativos
+networks:
+  geppa-network:
+    driver: bridge
