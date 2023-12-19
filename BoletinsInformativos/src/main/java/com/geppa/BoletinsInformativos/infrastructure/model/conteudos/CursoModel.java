@@ -5,6 +5,7 @@ import com.geppa.BoletinsInformativos.infrastructure.model.TagModel;
 import jakarta.persistence.*;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -41,10 +42,10 @@ public class CursoModel {
     private Duration duaracaoEmHoras;
 
     @Column(name = "cur_data_cadastro")
-    private LocalDateTime dataCadastro;
+    private Instant dataCadastro;
 
     @Column(name = "cur_data_atualizacao")
-    private LocalDateTime dataAtualizacao;
+    private Instant dataAtualizacao;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "cursos_tags",
@@ -119,19 +120,19 @@ public class CursoModel {
         this.duaracaoEmHoras = duaracaoEmHoras;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public Instant getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(Instant dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
-    public LocalDateTime getDataAtualizacao() {
+    public Instant getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+    public void setDataAtualizacao(Instant dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 
