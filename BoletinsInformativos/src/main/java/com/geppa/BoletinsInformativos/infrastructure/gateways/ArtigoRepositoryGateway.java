@@ -1,7 +1,6 @@
 package com.geppa.BoletinsInformativos.infrastructure.gateways;
 
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Artigo;
-import com.geppa.BoletinsInformativos.infrastructure.model.conteudos.ArtigoModel;
 import com.geppa.BoletinsInformativos.infrastructure.persistencia.ArtigoRepository;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class ArtigoRepositoryGateway {
     }
 
     public Optional<Artigo> buscarPorHash(UUID hash) {
-        ArtigoModel artigoModel = repository.findById(hash).orElse(null);
-        return Optional.ofNullable(Mapper.parseObject(artigoModel, Artigo.class));
+        return repository.findById(hash)
+                .map(artigoModel -> Mapper.parseObject(artigoModel, Artigo.class));
     }
 }
