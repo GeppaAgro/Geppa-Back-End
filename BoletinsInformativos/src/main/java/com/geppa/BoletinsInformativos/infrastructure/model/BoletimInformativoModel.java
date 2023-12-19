@@ -23,6 +23,9 @@ public class BoletimInformativoModel {
     @Column(name = "bol_data_publicacao")
     private LocalDate dataPublicacao;
 
+    @Column(name = "bol_data_cadastro")
+    private Instant dataCadastro;
+
     @Column(name = "bol_data_atualizacao")
     private Instant dataAtualizacao;
 
@@ -66,6 +69,14 @@ public class BoletimInformativoModel {
 
     public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
+    }
+
+    public Instant getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Instant dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 
     public Instant getDataAtualizacao() {

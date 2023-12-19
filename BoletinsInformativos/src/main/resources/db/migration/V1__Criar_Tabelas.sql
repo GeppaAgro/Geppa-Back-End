@@ -2,7 +2,8 @@ CREATE TABLE boletins_informativos
 (
     bol_id               UUID PRIMARY KEY,
     bol_data_publicacao  DATE,
-    bol_data_atualizacao TIMESTAMP(6) WITH TIME ZONE,
+    bol_data_cadastro    TIMESTAMP(6),
+    bol_data_atualizacao TIMESTAMP(6),
     bol_edicao           VARCHAR(15)
 );
 
