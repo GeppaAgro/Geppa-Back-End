@@ -1,7 +1,9 @@
 package com.geppa.BoletinsInformativos.domain.exceptions;
 
+import com.geppa.BoletinsInformativos.util.messages.MensagensExcecao;
+
 public class ConteudoNaoEncontradoExcecao extends RuntimeException {
-    public ConteudoNaoEncontradoExcecao(String nomeConteudo, String hash) {
-        super(nomeConteudo + " não encontrado para o hash: " + hash);
+    public ConteudoNaoEncontradoExcecao(String hash) {
+        super(MensagensExcecao.CONTEUDO_NAO_ENCONTRADO_HASH.getMensagem() + hash);
     }
 }
