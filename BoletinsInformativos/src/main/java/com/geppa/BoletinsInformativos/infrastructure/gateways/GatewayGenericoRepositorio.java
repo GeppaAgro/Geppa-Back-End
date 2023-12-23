@@ -2,6 +2,7 @@ package com.geppa.BoletinsInformativos.infrastructure.gateways;
 
 import com.geppa.BoletinsInformativos.domain.exceptions.MapperExcecao;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
+import com.geppa.BoletinsInformativos.util.messages.MensagensExcecao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class GatewayGenericoRepositorio<T> {
                     try {
                         return Mapper.parseObject(contentModel, entityType);
                     } catch (Exception e) {
-                        throw new MapperExcecao();
+                        throw new MapperExcecao(MensagensExcecao.FALHA_CONVERSAO_MODELO_DOMINIO.getMensagem());
                     }
                 });
     }
