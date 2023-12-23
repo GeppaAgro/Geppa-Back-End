@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArtigoDTO extends ConteudoDto {
+public class ArtigoDto extends ConteudoDto {
 
     private LocalDate dataPublicacao;
     private List<AutorDTO> autores = new ArrayList<>();
 
-    public ArtigoDTO() {
+    public ArtigoDto() {
     }
 
     public LocalDate getDataPublicacao() {
