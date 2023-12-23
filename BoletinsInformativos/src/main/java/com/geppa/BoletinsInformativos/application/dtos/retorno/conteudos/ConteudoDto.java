@@ -1,6 +1,6 @@
 package com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos;
 
-import com.geppa.BoletinsInformativos.application.dtos.retorno.TagDTO;
+import com.geppa.BoletinsInformativos.application.dtos.retorno.TagDto;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.Instant;
@@ -16,7 +16,7 @@ public abstract class ConteudoDto extends RepresentationModel<ConteudoDto> {
     private String link;
     private Instant dataCadastro;
     private Instant dataAtualizacao;
-    private List<TagDTO> tags;
+    private List<TagDto> tags;
 
     public ConteudoDto() {
     }
@@ -77,11 +77,11 @@ public abstract class ConteudoDto extends RepresentationModel<ConteudoDto> {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public List<TagDTO> getTags() {
+    public List<TagDto> getTags() {
         return tags;
     }
 
-    public void setTags(List<TagDTO> tags) {
+    public void setTags(List<TagDto> tags) {
         this.tags = tags;
     }
 }

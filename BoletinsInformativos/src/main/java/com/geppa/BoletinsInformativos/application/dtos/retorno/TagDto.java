@@ -4,7 +4,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.util.UUID;
 
-public class TagDTO extends RepresentationModel<TagDTO> {
+public class TagDto extends RepresentationModel<TagDto> {
     private UUID id;
     private String nome;
 
