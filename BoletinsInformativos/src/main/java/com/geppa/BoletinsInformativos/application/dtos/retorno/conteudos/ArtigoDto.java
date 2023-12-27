@@ -1,6 +1,6 @@
 package com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos;
 
-import com.geppa.BoletinsInformativos.application.dtos.retorno.AutorDTO;
+import com.geppa.BoletinsInformativos.application.dtos.retorno.AutorDto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.List;
 public class ArtigoDto extends ConteudoDto {
 
     private LocalDate dataPublicacao;
-    private List<AutorDTO> autores = new ArrayList<>();
+    private List<AutorDto> autores = new ArrayList<>();
 
     public ArtigoDto() {
     }
@@ -22,11 +22,11 @@ public class ArtigoDto extends ConteudoDto {
         this.dataPublicacao = dataPublicacao;
     }
 
-    public List<AutorDTO> getAutores() {
+    public List<AutorDto> getAutores() {
         return autores;
     }
 
-    public void setAutores(List<AutorDTO> autores) {
+    public void setAutores(List<AutorDto> autores) {
         this.autores = autores;
     }
 }

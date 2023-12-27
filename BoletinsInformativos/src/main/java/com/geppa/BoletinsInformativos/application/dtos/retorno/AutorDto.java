@@ -2,11 +2,11 @@ package com.geppa.BoletinsInformativos.application.dtos.retorno;
 
 import java.util.UUID;
 
-public class AutorDTO {
+public class AutorDto {
     private UUID id;
     private String nome;
 
-    public AutorDTO() {
+    public AutorDto() {
     }
 
     public UUID getId() {
