@@ -4,7 +4,6 @@ import com.geppa.BoletinsInformativos.infrastructure.model.BoletimInformativoMod
 import com.geppa.BoletinsInformativos.infrastructure.model.TagModel;
 import jakarta.persistence.*;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -39,7 +38,7 @@ public class CursoModel {
     private Double preco;
 
     @Column(name = "cur_duracao_em_horas")
-    private Duration duaracaoEmHoras;
+    private Integer duracaoEmHoras;
 
     @Column(name = "cur_data_cadastro")
     private Instant dataCadastro;
@@ -112,12 +111,12 @@ public class CursoModel {
         this.preco = preco;
     }
 
-    public Duration getDuaracaoEmHoras() {
-        return duaracaoEmHoras;
+    public Integer getDuracaoEmHoras() {
+        return duracaoEmHoras;
     }
 
-    public void setDuaracaoEmHoras(Duration duaracaoEmHoras) {
-        this.duaracaoEmHoras = duaracaoEmHoras;
+    public void setDuracaoEmHoras(Integer duracaoEmHoras) {
+        this.duracaoEmHoras = duracaoEmHoras;
     }
 
     public Instant getDataCadastro() {

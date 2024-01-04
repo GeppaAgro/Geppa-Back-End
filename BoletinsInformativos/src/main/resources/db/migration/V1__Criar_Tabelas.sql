@@ -46,7 +46,7 @@ CREATE TABLE autores
 CREATE TABLE cursos
 (
     cur_id               UUID PRIMARY KEY,
-    cur_duracao_em_horas NUMERIC(21),
+    cur_duracao_em_horas INTEGER,
     cur_preco            DOUBLE PRECISION,
     cur_data_atualizacao TIMESTAMP(6),
     cur_data_cadastro    TIMESTAMP(6),
