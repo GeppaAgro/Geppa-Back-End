@@ -1,11 +1,12 @@
-package com.geppa.BoletinsInformativos.application.dtos.retorno;
+package com.geppa.BoletinsInformativos.application.dtos.padrao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.geppa.BoletinsInformativos.util.UrlUtils;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
-public class RetornoPadraoDto {
+public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
     @JsonFormat(pattern = "dd/MM/yy HH:mm:ss")
     private LocalDateTime dataHora = LocalDateTime.now();
     private String mensagem;

@@ -1,6 +1,6 @@
 package com.geppa.BoletinsInformativos.application.exceptions.handler;
 
-import com.geppa.BoletinsInformativos.application.dtos.retorno.RetornoPadraoDto;
+import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.domain.exceptions.ExcecaoPersonalizada;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
