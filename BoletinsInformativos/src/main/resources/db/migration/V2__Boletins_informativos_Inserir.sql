@@ -1,3 +1,28 @@
-INSERT INTO boletins_informativos (bol_id, bol_data_publicacao,bol_data_cadastro, bol_data_atualizacao, bol_edicao)
-VALUES
-    ('451228f5-cb48-47b0-9a9a-d61629bd6a67', '2023-10-15', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '452023');
+INSERT INTO boletins_informativos (bol_id, bol_data_publicacao, bol_data_cadastro, bol_data_atualizacao, bol_edicao)
+VALUES ('451228f5-cb48-47b0-9a9a-d61629bd6a67',
+        '2023-10-15',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        '452023'),
+       ('63e81075-8e8f-4f91-bb94-7ff7f3f59945',
+        '2023-11-30',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        '462024'),
+       ('eebae804-72a6-4f2b-a2aa-df0a5910bfe9',
+        '2023-12-20',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        '472025'),
+       ('a235123e-0a94-4c67-b623-538fcd69c2bc',
+        '2024-01-10',
+        CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP,
+        '012026'),
+       (
+           'f68d478b-3f11-4564-aa29-907a43d6a4e2',
+           '2024-02-15',
+           CURRENT_TIMESTAMP,
+           CURRENT_TIMESTAMP,
+           '022027'
+       );
