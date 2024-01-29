@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/boletins")
 public class BoletimController {
@@ -50,7 +53,8 @@ public class BoletimController {
         Page<BoletimInformativo> boletimInformativos = consultarTodos.executar(pageable, BoletimInformativo.class);
         Page<BoletimInformativoDto> boletimInformativoDtos = boletimInformativos.map(video -> Mapper.parseObject(video, BoletimInformativoDto.class));
 
-//        TODO: adicionar hateoas aos conteudos
+//      TODO: refatorar a adição de hateoas ao boletim
+        boletimInformativoDtos.forEach(bl -> bl.add(linkTo(methodOn(BoletimController.class).buscarPorHash(bl.getEdicao())).withSelfRel()));
 
         RetornoPadraoComPaginacaoDto retornoSucessoDto = new RetornoPadraoComPaginacaoDto(
                 MensagensRetorno.BUSCA_REALIZADA_COM_SUCESSO.getMensagem(),
