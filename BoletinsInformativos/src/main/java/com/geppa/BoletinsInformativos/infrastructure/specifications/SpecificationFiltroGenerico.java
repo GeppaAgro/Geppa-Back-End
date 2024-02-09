@@ -19,11 +19,11 @@ public class SpecificationFiltroGenerico<T> implements Specification<T> {
         Predicate predicate = criteriaBuilder.conjunction();
 
         if (filtroGenericoDto.getDataMinima() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.greaterThanOrEqualTo(root.get("dataPublicacao"), filtroGenericoDto.getDataMinima()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.greaterThanOrEqualTo(root.get("dataCadastro"), filtroGenericoDto.getDataMinima()));
         }
 
         if (filtroGenericoDto.getDataMaxima() != null) {
-            predicate = criteriaBuilder.and(predicate, criteriaBuilder.lessThanOrEqualTo(root.get("dataPublicacao"), filtroGenericoDto.getDataMaxima()));
+            predicate = criteriaBuilder.and(predicate, criteriaBuilder.lessThanOrEqualTo(root.get("dataCadastro"), filtroGenericoDto.getDataMaxima()));
         }
 
         if (filtroGenericoDto.getTags() != null && !filtroGenericoDto.getTags().isEmpty()) {
