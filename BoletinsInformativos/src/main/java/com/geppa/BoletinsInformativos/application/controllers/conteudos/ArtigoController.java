@@ -3,6 +3,8 @@ package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.ArtigoDto;
+import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
+
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Artigo;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
@@ -43,8 +45,11 @@ public class ArtigoController {
     }
 
     @GetMapping
-    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Artigo> artigos = consultarTodos.executar(pageable, Artigo.class);
+    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(
+            @PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
+            @ModelAttribute FiltroGenericoDto filtro) {
+
+        Page<Artigo> artigos = consultarTodos.executar(pageable, filtro, Artigo.class);
         Page<ArtigoDto> artigoDtos = artigos.map(artigo -> Mapper.parseObject(artigo, ArtigoDto.class));
 
 //        TODO: adicionar hateoas aos conteudos

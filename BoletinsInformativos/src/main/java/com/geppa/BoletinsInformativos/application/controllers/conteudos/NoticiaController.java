@@ -3,6 +3,7 @@ package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.NoticiaDto;
+import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Noticia;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
@@ -16,10 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/noticias")
@@ -48,8 +46,9 @@ public class NoticiaController {
     }
 
     @GetMapping
-    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Noticia> noticias = consultarTodos.executar(pageable, Noticia.class);
+    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
+                                                                    @ModelAttribute FiltroGenericoDto filtro) {
+        Page<Noticia> noticias = consultarTodos.executar(pageable,filtro, Noticia.class);
         Page<NoticiaDto> noticiasDtos = noticias.map(noticia -> Mapper.parseObject(noticia, NoticiaDto.class));
 
 //        TODO: adicionar hateoas aos conteudos

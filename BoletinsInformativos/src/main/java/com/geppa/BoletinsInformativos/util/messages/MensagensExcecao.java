@@ -7,7 +7,8 @@ public enum MensagensExcecao {
     FALHA_CONVERSAO_MODELO_DOMINIO("Falha na conversão do modelo para domínio"),
     BOLETIM_NAO_ENCONTRADO_EDICAO("Boletim não encontrado para a edição: "),
     ORDENACAO_INVALIDA("Não foi possível ordenar por "),
-    BUSCA_INVALIDA("Falha ao buscar os registros");
+    BUSCA_INVALIDA("Falha ao buscar os registros"),
+    DADOS_NAO_ENCONTRADOS("Não foram encontrados registros com essas especificações para o tipo: ");
 
     private final String mensagem;
 

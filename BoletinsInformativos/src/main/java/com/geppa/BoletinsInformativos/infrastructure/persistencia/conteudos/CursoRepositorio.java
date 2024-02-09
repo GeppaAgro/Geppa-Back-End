@@ -1,11 +1,9 @@
 package com.geppa.BoletinsInformativos.infrastructure.persistencia.conteudos;
 
 import com.geppa.BoletinsInformativos.infrastructure.model.conteudos.CursoModel;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.geppa.BoletinsInformativos.infrastructure.persistencia.RepositorioGenerico;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface CursoRepositorio extends JpaRepository<CursoModel, UUID> {
+public interface CursoRepositorio extends RepositorioGenerico<CursoModel> {
 }
