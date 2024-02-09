@@ -3,6 +3,7 @@ package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.VideoDto;
+import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Video;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
@@ -15,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/videos")
@@ -47,8 +45,9 @@ public class VideoController {
     }
 
     @GetMapping
-    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Video> videos = consultarTodos.executar(pageable, Video.class);
+    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
+                                                                    @ModelAttribute FiltroGenericoDto filtro) {
+        Page<Video> videos = consultarTodos.executar(pageable, filtro, Video.class);
         Page<VideoDto> videoDtos = videos.map(video -> Mapper.parseObject(video, VideoDto.class));
 
 //        TODO: adicionar hateoas aos conteudos

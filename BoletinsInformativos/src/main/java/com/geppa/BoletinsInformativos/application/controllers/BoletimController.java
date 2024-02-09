@@ -3,6 +3,7 @@ package com.geppa.BoletinsInformativos.application.controllers;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.BoletimInformativoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
+import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.ConsultaBoletimPorEdicao;
@@ -15,10 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -49,8 +47,9 @@ public class BoletimController {
     }
 
     @GetMapping
-    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<BoletimInformativo> boletimInformativos = consultarTodos.executar(pageable, BoletimInformativo.class);
+    public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
+                                                                    @ModelAttribute FiltroGenericoDto filtro) {
+        Page<BoletimInformativo> boletimInformativos = consultarTodos.executar(pageable, filtro, BoletimInformativo.class);
         Page<BoletimInformativoDto> boletimInformativoDtos = boletimInformativos.map(video -> Mapper.parseObject(video, BoletimInformativoDto.class));
 
 //      TODO: refatorar a adição de hateoas ao boletim
