@@ -1,11 +1,10 @@
 package com.geppa.BoletinsInformativos.infrastructure.gateways;
 
+import com.geppa.BoletinsInformativos.infrastructure.persistencia.RepositorioGenerico;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -26,7 +25,7 @@ public class GatewayRepositoryGenericoFactory {
 
     private <T> GatewayGenericoRepositorio<T> createGateway(Class<T> classeDominio) {
         String repositoryBeanName = Character.toLowerCase(classeDominio.getSimpleName().charAt(0)) + classeDominio.getSimpleName().substring(1) + "Repositorio";
-        JpaRepository<T, UUID> repository = beanFactory.getBean(repositoryBeanName, JpaRepository.class);
+        RepositorioGenerico<T> repository = beanFactory.getBean(repositoryBeanName, RepositorioGenerico.class);
         if (repository == null) {
             throw new RuntimeException("Nenhum bean de repositório encontrado para a classe: " + classeDominio.getSimpleName());
         }
