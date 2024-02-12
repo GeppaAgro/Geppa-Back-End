@@ -135,3 +135,15 @@ CREATE TABLE videos_tags
     FOREIGN KEY (tag_id) REFERENCES tags (tag_id),
     FOREIGN KEY (vid_id) REFERENCES videos (vid_id)
 );
+
+
+CREATE TABLE indicadores
+(
+    ind_id     UUID PRIMARY KEY,
+    ind_nome   VARCHAR(255),
+    ind_valor  DOUBLE PRECISION,
+    ind_unidade_medida VARCHAR(25),
+    ind_data   DATE,
+    ind_bol_id UUID,
+    FOREIGN KEY (ind_bol_id) REFERENCES boletins_informativos (bol_id)
+);
