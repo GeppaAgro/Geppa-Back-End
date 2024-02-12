@@ -1,6 +1,7 @@
 package com.geppa.BoletinsInformativos.application.controllers;
 
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
+import com.geppa.BoletinsInformativos.application.dtos.retorno.BoletimInformativoCompletoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.BoletimInformativoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
@@ -37,7 +38,7 @@ public class BoletimController {
 
     @GetMapping("/{edicao}")
     public ResponseEntity<RetornoPadraoDto> buscarPorHash(@PathVariable String edicao) {
-        BoletimInformativoDto boletimInformativoDto = Mapper.parseObject(consultaBoletimPorEdicao.executar(edicao), BoletimInformativoDto.class);
+        BoletimInformativoCompletoDto boletimInformativoDto = Mapper.parseObject(consultaBoletimPorEdicao.executar(edicao), BoletimInformativoCompletoDto.class);
 //      TODO: adicionar hateoas
 
         RetornoPadraoDto retornoSucessoDto = new RetornoPadraoDto(
