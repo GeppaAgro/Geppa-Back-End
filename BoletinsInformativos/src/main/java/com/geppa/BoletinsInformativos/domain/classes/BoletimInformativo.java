@@ -19,6 +19,7 @@ public class BoletimInformativo {
     private List<Evento> eventos = new ArrayList<>();
     private List<Noticia> noticias = new ArrayList<>();
     private List<Video> videos = new ArrayList<>();
+    private List<Indicador> indicadores = new ArrayList<>();
 
     public BoletimInformativo() {
     }
@@ -101,5 +102,13 @@ public class BoletimInformativo {
 
     public void setVideos(List<Video> videos) {
         this.videos = videos;
+    }
+
+    public List<Indicador> getIndicadores() {
+        return indicadores;
+    }
+
+    public void setIndicadores(List<Indicador> indicadores) {
+        this.indicadores = indicadores;
     }
 }
