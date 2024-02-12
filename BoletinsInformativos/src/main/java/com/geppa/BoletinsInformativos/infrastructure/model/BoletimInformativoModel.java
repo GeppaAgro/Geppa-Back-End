@@ -44,6 +44,9 @@ public class BoletimInformativoModel {
     @OneToMany(mappedBy = "boletimInformativo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VideoModel> videos;
 
+    @OneToMany(mappedBy = "boletimInformativo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<IndicadorModel> indicadores;
+
     public BoletimInformativoModel() {
     }
 
@@ -125,5 +128,13 @@ public class BoletimInformativoModel {
 
     public void setVideos(List<VideoModel> videos) {
         this.videos = videos;
+    }
+
+    public List<IndicadorModel> getIndicadores() {
+        return indicadores;
+    }
+
+    public void setIndicadores(List<IndicadorModel> indicadores) {
+        this.indicadores = indicadores;
     }
 }

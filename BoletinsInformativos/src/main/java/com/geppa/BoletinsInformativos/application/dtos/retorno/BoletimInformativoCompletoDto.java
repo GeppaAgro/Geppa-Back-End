@@ -1,6 +1,8 @@
-package com.geppa.BoletinsInformativos.domain.classes;
+package com.geppa.BoletinsInformativos.application.dtos.retorno;
 
-import com.geppa.BoletinsInformativos.domain.classes.conteudos.*;
+import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.*;
+
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -8,20 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class BoletimInformativo {
+public class BoletimInformativoCompletoDto extends RepresentationModel<BoletimInformativoCompletoDto> {
     private UUID id;
     private String edicao;
     private LocalDate dataPublicacao;
     private Instant dataAtualizacao;
     private Instant dataCadastro;
-    private List<Artigo> artigos = new ArrayList<>();
-    private List<Curso> cursos = new ArrayList<>();
-    private List<Evento> eventos = new ArrayList<>();
-    private List<Noticia> noticias = new ArrayList<>();
-    private List<Video> videos = new ArrayList<>();
-    private List<Indicador> indicadores = new ArrayList<>();
+    private List<ArtigoDto> artigos = new ArrayList<>();
+    private List<CursoDto> cursos = new ArrayList<>();
+    private List<EventoDto> eventos = new ArrayList<>();
+    private List<NoticiaDto> noticias = new ArrayList<>();
+    private List<VideoDto> videos = new ArrayList<>();
+    private List<IndicadorDto> indicadores = new ArrayList<>();
 
-    public BoletimInformativo() {
+    public BoletimInformativoCompletoDto() {
     }
 
     public UUID getId() {
@@ -64,51 +66,51 @@ public class BoletimInformativo {
         this.dataCadastro = dataCadastro;
     }
 
-    public List<Artigo> getArtigos() {
-        return artigos;
-    }
-
-    public void setArtigos(List<Artigo> artigos) {
-        this.artigos = artigos;
-    }
-
-    public List<Curso> getCursos() {
-        return cursos;
-    }
-
-    public void setCursos(List<Curso> cursos) {
-        this.cursos = cursos;
-    }
-
-    public List<Evento> getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
-
-    public List<Noticia> getNoticias() {
-        return noticias;
-    }
-
-    public void setNoticias(List<Noticia> noticias) {
-        this.noticias = noticias;
-    }
-
-    public List<Video> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(List<Video> videos) {
-        this.videos = videos;
-    }
-
-    public List<Indicador> getIndicadores() {
+    public List<IndicadorDto> getIndicadores() {
         return indicadores;
     }
 
-    public void setIndicadores(List<Indicador> indicadores) {
+    public void setIndicadores(List<IndicadorDto> indicadores) {
         this.indicadores = indicadores;
+    }
+
+    public List<ArtigoDto> getArtigos() {
+        return artigos;
+    }
+
+    public void setArtigos(List<ArtigoDto> artigos) {
+        this.artigos = artigos;
+    }
+
+    public List<CursoDto> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(List<CursoDto> cursos) {
+        this.cursos = cursos;
+    }
+
+    public List<EventoDto> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(List<EventoDto> eventos) {
+        this.eventos = eventos;
+    }
+
+    public List<NoticiaDto> getNoticias() {
+        return noticias;
+    }
+
+    public void setNoticias(List<NoticiaDto> noticias) {
+        this.noticias = noticias;
+    }
+
+    public List<VideoDto> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<VideoDto> videos) {
+        this.videos = videos;
     }
 }
