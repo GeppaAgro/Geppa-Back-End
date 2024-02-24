@@ -10,7 +10,8 @@ public enum MensagensExcecao {
     BUSCA_INVALIDA("Falha ao buscar os registros"),
     DADOS_NAO_ENCONTRADOS("Não foram encontrados registros com essas especificações para o tipo: "),
     REGISTRO_DUPLICADO("Registro já cadastrado"),
-    FALHA_CADASTRO("Falha ao cadastrar o registro");
+    FALHA_CADASTRO("Falha ao cadastrar o registro"),
+    ERRO_VALIDACAO("Erro de validacao");
 
     private final String mensagem;
 
