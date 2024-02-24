@@ -9,7 +9,7 @@ import com.geppa.BoletinsInformativos.domain.classes.conteudos.Curso;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
-import com.geppa.BoletinsInformativos.util.messages.MensagensRetorno;
+import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
