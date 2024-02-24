@@ -1,6 +1,7 @@
 package com.geppa.BoletinsInformativos.application.dtos.padrao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.geppa.BoletinsInformativos.util.UrlUtils;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -13,6 +14,9 @@ public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
     private int status;
     private String path;
     private Object dados;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Object errosValidacao;
 
     public RetornoPadraoDto(String mensagem, int status, Object dados) {
         this.mensagem = mensagem;
@@ -65,5 +69,13 @@ public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
 
     public void setDados(Object dados) {
         this.dados = dados;
+    }
+
+    public Object getErrosValidacao() {
+        return errosValidacao;
+    }
+
+    public void setErrosValidacao(Object errosValidacao) {
+        this.errosValidacao = errosValidacao;
     }
 }

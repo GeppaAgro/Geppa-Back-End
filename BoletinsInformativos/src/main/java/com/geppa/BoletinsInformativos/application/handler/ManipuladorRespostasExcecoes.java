@@ -40,7 +40,8 @@ public class ManipuladorRespostasExcecoes extends ResponseEntityExceptionHandler
             errorMap.put(fieldName, errorMessage);
         });
         RetornoPadraoDto respostaExcecao = new RetornoPadraoDto(exception.getMessage(),
-                exception.getStatus().value(), errorMap);
+                exception.getStatus().value());
+        respostaExcecao.setErrosValidacao(errorMap);
         return new ResponseEntity<>(respostaExcecao, exception.getStatus());
     }
 
