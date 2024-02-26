@@ -1,4 +1,4 @@
-package com.geppa.BoletinsInformativos.util.messages;
+package com.geppa.BoletinsInformativos.util.enums.messages;
 
 public enum MensagensExcecao {
 
@@ -8,7 +8,10 @@ public enum MensagensExcecao {
     BOLETIM_NAO_ENCONTRADO_EDICAO("Boletim não encontrado para a edição: "),
     ORDENACAO_INVALIDA("Não foi possível ordenar por "),
     BUSCA_INVALIDA("Falha ao buscar os registros"),
-    DADOS_NAO_ENCONTRADOS("Não foram encontrados registros com essas especificações para o tipo: ");
+    DADOS_NAO_ENCONTRADOS("Não foram encontrados registros com essas especificações para o tipo: "),
+    REGISTRO_DUPLICADO("Registro já cadastrado"),
+    FALHA_CADASTRO("Falha ao cadastrar o registro"),
+    ERRO_VALIDACAO("Erro de validacao");
 
     private final String mensagem;
 

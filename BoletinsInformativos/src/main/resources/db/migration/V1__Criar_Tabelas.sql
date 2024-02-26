@@ -147,3 +147,12 @@ CREATE TABLE indicadores
     ind_bol_id UUID,
     FOREIGN KEY (ind_bol_id) REFERENCES boletins_informativos (bol_id)
 );
+
+CREATE TABLE inscricao_newsletter
+(
+    inl_id               UUID PRIMARY KEY,
+    inl_data_cadastro    TIMESTAMP(6),
+    inl_data_atualizacao TIMESTAMP(6),
+    inl_email            VARCHAR(255),
+    inl_ativo            BOOLEAN
+);

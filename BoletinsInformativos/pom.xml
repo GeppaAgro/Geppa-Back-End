@@ -18,6 +18,7 @@
         <flyway.version>9.20.1</flyway.version>
         <modelmapper.version>3.2.0</modelmapper.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <mail.version>1.6.2</mail.version>
     </properties>
     <dependencies>
         <dependency>
@@ -48,7 +49,6 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -73,6 +73,12 @@
             <groupId>org.springframework.hateoas</groupId>
             <artifactId>spring-hateoas</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${mail.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

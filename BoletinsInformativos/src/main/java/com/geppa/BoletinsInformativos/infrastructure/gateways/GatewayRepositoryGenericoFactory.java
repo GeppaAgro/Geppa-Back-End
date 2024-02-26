@@ -5,14 +5,13 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.HashMap;
 
 @Component
 public class GatewayRepositoryGenericoFactory {
 
     private final BeanFactory beanFactory;
-    private final ConcurrentMap<Class<?>, GatewayGenericoRepositorio<?>> repositoryMap = new ConcurrentHashMap<>();
+    private final HashMap<Class<?>, GatewayGenericoRepositorio<?>> repositoryMap = new HashMap<>();
 
     @Autowired
     public GatewayRepositoryGenericoFactory(BeanFactory beanFactory) {
@@ -25,7 +24,7 @@ public class GatewayRepositoryGenericoFactory {
 
     private <T> GatewayGenericoRepositorio<T> createGateway(Class<T> classeDominio) {
         String repositoryBeanName = Character.toLowerCase(classeDominio.getSimpleName().charAt(0)) + classeDominio.getSimpleName().substring(1) + "Repositorio";
-        RepositorioGenerico<T> repository = beanFactory.getBean(repositoryBeanName, RepositorioGenerico.class);
+        RepositorioGenerico repository = beanFactory.getBean(repositoryBeanName, RepositorioGenerico.class);
         if (repository == null) {
             throw new RuntimeException("Nenhum bean de repositório encontrado para a classe: " + classeDominio.getSimpleName());
         }
