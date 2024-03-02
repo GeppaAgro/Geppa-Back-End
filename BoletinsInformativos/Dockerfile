@@ -1,4 +1,10 @@
-FROM openjdk:21
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:17-jdk-slim
+
+WORKDIR /geppa
+
+COPY target/*.jar /geppa/app.jar
+
+EXPOSE 80
+
+CMD java -XX:+UseContainerSupport -Xmx500m -jar app.jar --server.port=$PORT
+
