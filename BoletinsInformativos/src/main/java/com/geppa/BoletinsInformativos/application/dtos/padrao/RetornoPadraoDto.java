@@ -8,7 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 import java.time.LocalDateTime;
 
 public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
-    @JsonFormat(pattern = "dd/MM/yy HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yy HH:mm:ss", timezone = "America/Sao_Paulo")
     private LocalDateTime dataHora = LocalDateTime.now();
     private String mensagem;
     private int status;

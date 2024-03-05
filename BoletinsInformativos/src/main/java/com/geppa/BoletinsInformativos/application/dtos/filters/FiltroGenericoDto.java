@@ -14,6 +14,9 @@ public class FiltroGenericoDto {
         this.tags = tags;
     }
 
+    public FiltroGenericoDto() {
+    }
+
     public LocalDate getDataMinima() {
         return dataMinima;
     }
