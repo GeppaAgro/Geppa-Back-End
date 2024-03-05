@@ -4,7 +4,9 @@ import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.UltimoConteudoDto;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Conteudo;
 import com.geppa.BoletinsInformativos.domain.useCases.ultimosConteudos.UltimosConteudosPorTipoConteudo;
+import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +37,8 @@ public class ConteudoController {
         });
 
         RetornoPadraoDto retornoSucessoDto = new RetornoPadraoDto(
-                "Ultimos conteúdos encontrados com sucesso",
-                200,
+                MensagensRetorno.ULTIMOS_CONTEUDOS_ENCONTRADOS_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value(),
                 ultimosConteudosDto
         );
 
