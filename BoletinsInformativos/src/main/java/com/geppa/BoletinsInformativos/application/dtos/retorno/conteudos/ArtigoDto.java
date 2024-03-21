@@ -13,6 +13,9 @@ public class ArtigoDto extends ConteudoDto {
 
     public ArtigoDto() {
     }
+    public String getTipo() {
+        return "Artigo";
+    }
 
     public LocalDate getDataPublicacao() {
         return dataPublicacao;

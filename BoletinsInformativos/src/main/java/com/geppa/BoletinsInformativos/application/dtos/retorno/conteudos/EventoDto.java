@@ -9,6 +9,10 @@ public class EventoDto extends ConteudoDto {
     private LocalDateTime dataHoraInicio;
     private LocalDateTime dataHoraFim;
 
+    public String getTipo() {
+        return "Evento";
+    }
+
     public String getLocal() {
         return local;
     }

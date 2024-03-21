@@ -5,6 +5,10 @@ import java.time.LocalDate;
 public class NoticiaDto extends ConteudoDto {
     private LocalDate dataPublicacao;
 
+    public String getTipo() {
+        return "Noticia";
+    }
+
     public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }

@@ -8,6 +8,10 @@ public class CursoDto extends ConteudoDto {
     private Double preco;
     private Integer duracaoEmHoras;
 
+    public String getTipo() {
+        return "Curso";
+    }
+
     public LocalDateTime getPrazoInscricao() {
         return prazoInscricao;
     }

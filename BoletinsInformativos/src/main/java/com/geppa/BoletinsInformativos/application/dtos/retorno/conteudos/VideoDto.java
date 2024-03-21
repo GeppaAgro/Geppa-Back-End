@@ -4,6 +4,10 @@ public class VideoDto extends ConteudoDto {
 
     private boolean youtube;
 
+    public String getTipo() {
+        return "Video";
+    }
+
     public boolean isYoutube() {
         return youtube;
     }
