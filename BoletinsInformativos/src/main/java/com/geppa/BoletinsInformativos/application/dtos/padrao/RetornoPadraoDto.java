@@ -1,18 +1,22 @@
 package com.geppa.BoletinsInformativos.application.dtos.padrao;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.geppa.BoletinsInformativos.util.UrlUtils;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 
 public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
-    @JsonFormat(pattern = "dd/MM/yy HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yy HH:mm:ss", timezone = "America/Sao_Paulo")
     private LocalDateTime dataHora = LocalDateTime.now();
     private String mensagem;
     private int status;
     private String path;
     private Object dados;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Object errosValidacao;
 
     public RetornoPadraoDto(String mensagem, int status, Object dados) {
         this.mensagem = mensagem;
@@ -65,5 +69,13 @@ public class RetornoPadraoDto extends RepresentationModel<RetornoPadraoDto> {
 
     public void setDados(Object dados) {
         this.dados = dados;
+    }
+
+    public Object getErrosValidacao() {
+        return errosValidacao;
+    }
+
+    public void setErrosValidacao(Object errosValidacao) {
+        this.errosValidacao = errosValidacao;
     }
 }

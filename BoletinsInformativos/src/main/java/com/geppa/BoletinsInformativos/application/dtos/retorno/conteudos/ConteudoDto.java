@@ -17,6 +17,7 @@ public abstract class ConteudoDto extends RepresentationModel<ConteudoDto> {
     private Instant dataCadastro;
     private Instant dataAtualizacao;
     private List<TagDto> tags;
+    protected String tipo;
 
     public ConteudoDto() {
     }
@@ -84,4 +85,6 @@ public abstract class ConteudoDto extends RepresentationModel<ConteudoDto> {
     public void setTags(List<TagDto> tags) {
         this.tags = tags;
     }
+
+    public abstract String getTipo();
 }

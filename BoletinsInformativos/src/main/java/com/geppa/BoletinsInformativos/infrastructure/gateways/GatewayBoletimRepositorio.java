@@ -4,7 +4,7 @@ import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.exceptions.MapperExcecao;
 import com.geppa.BoletinsInformativos.infrastructure.persistencia.BoletimInformativoRepositorio;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
-import com.geppa.BoletinsInformativos.util.messages.MensagensExcecao;
+import com.geppa.BoletinsInformativos.util.enums.messages.MensagensExcecao;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
