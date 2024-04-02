@@ -53,6 +53,23 @@ public class GatewayGenericoRepositorio<T> {
         }
     }
 
+    public Page<T> buscarTodosComPaginacao(Pageable pageable) {
+        try {
+            return repository.findAll(pageable)
+                    .map(contentModel -> {
+                        try {
+                            return Mapper.parseObject(contentModel, entityType);
+                        } catch (Exception e) {
+                            throw new MapperExcecao(MensagensExcecao.FALHA_CONVERSAO_MODELO_DOMINIO.getMensagem());
+                        }
+                    });
+        } catch (PropertyReferenceException e) {
+            throw new OrdenacaaoInvalidaExcecao(pageable.getSort().toString());
+        } catch (Exception e) {
+            throw new BuscaInvalidaExcecao();
+        }
+    }
+
     public T salvar(T objeto) {
         try {
             return Mapper.parseObject(repository.save(Mapper.parseObject(objeto, repository.getClasseModelo())), entityType);

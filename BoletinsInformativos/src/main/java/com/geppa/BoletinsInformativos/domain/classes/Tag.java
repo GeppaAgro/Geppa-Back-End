@@ -1,10 +1,16 @@
 package com.geppa.BoletinsInformativos.domain.classes;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 import java.util.UUID;
 
 public class Tag {
 
     private UUID id;
+
+    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @NotBlank
     private String nome;
 
     public UUID getId() {
