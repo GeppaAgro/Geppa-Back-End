@@ -26,4 +26,13 @@ public class ConsultarTodos {
         }
         return resultado;
     }
+
+    public <T> Page<T> executar(Pageable pageable, Class<T> tipoConteudo) {
+        GatewayGenericoRepositorio<T> gatewayGenericoRepositorio = gatewayFactory.getGatewayFor(tipoConteudo);
+        Page<T> resultado = gatewayGenericoRepositorio.buscarTodosComPaginacao(pageable);
+        if (!resultado.hasContent()) {
+            throw new DadosNaoEncontradosExcecao(tipoConteudo.getSimpleName());
+        }
+        return resultado;
+    }
 }
