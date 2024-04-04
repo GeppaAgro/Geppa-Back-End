@@ -1,10 +1,15 @@
 package com.geppa.BoletinsInformativos.application.controllers;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.InscricaoNewsletterCadastroDto;
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.TagCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
+import com.geppa.BoletinsInformativos.application.dtos.retorno.InscricaoNewsletterDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.TagDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
+import com.geppa.BoletinsInformativos.domain.classes.InscricaoNewsletter;
 import com.geppa.BoletinsInformativos.domain.classes.Tag;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.Cadastrar;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.domain.useCases.tags.BuscarTagPorNome;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
@@ -16,7 +21,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -25,10 +32,12 @@ public class TagsController {
 
     private final BuscarTagPorNome buscarPorNome;
     private final ConsultarTodos consultarTodos;
+    private final Cadastrar cadastrar;
 
-    public TagsController(BuscarTagPorNome buscarPorNome, ConsultarTodos consultarTodos) {
+    public TagsController(BuscarTagPorNome buscarPorNome, ConsultarTodos consultarTodos, Cadastrar cadastrar) {
         this.buscarPorNome = buscarPorNome;
         this.consultarTodos = consultarTodos;
+        this.cadastrar = cadastrar;
     }
 
     @GetMapping("/buscarPorNome")
@@ -62,6 +71,17 @@ public class TagsController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, tags);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<RetornoPadraoDto> cadastrarTag(@RequestBody TagCadastroDto tagCadastroDto) {
+        Tag tag = cadastrar.executar(Mapper.parseObject(tagCadastroDto, Tag.class), Tag.class);
+
+        RetornoPadraoDto resposta = new RetornoPadraoDto(MensagensRetorno.TAG_CADASTRADA_SUCESSO.getMensagem(), 201,
+                Mapper.parseObject(tag, TagDto.class));
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(tag.getId()).toUri();
+        return ResponseEntity.created(location).body(resposta);
     }
 
 }
