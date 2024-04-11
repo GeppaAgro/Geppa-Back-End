@@ -11,7 +11,9 @@ public enum MensagensExcecao {
     DADOS_NAO_ENCONTRADOS("Não foram encontrados registros com essas especificações para : "),
     REGISTRO_DUPLICADO("Registro já cadastrado"),
     FALHA_CADASTRO("Falha ao cadastrar o registro"),
-    ERRO_VALIDACAO("Erro de validacao");
+    ERRO_VALIDACAO("Erro de validacao"),
+    INSCRICAO_NAO_ENCONTRADA("Inscrição não encontrada Para o email: "),
+    INSCRICAO_JA_CANCELADA("Inscrição já cancelada Para o email: ");
 
     private final String mensagem;
 
