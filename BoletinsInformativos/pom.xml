@@ -14,7 +14,7 @@
     <name>BoletinsInformativos</name>
     <description>SISTEMA WEB DE APOIO AO GEPPA</description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <flyway.version>9.20.1</flyway.version>
         <modelmapper.version>3.2.0</modelmapper.version>
         <postgresql.version>42.6.0</postgresql.version>
