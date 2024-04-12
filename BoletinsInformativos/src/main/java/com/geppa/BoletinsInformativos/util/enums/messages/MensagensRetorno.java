@@ -10,7 +10,8 @@ public enum MensagensRetorno {
         SUCESSO_INSCRICAO_NEWSLETTER("Inscrição realizada com sucesso"),
         ULTIMOS_CONTEUDOS_ENCONTRADOS_COM_SUCESSO("Últimos conteúdos encontrados com sucesso"),
         SUCESSO_CANCELAMENTO_NEWSLETTER("Cancelamento de inscrição realizado com sucesso"),
-        TAG_CADASTRADA_SUCESSO("Tag cadastrada com sucesso");
+        TAG_CADASTRADA_SUCESSO("Tag cadastrada com sucesso"),
+        TAG_DELETADA_COM_SUCESSO("Tag deletada com sucesso");
 
         private final String mensagem;
 
