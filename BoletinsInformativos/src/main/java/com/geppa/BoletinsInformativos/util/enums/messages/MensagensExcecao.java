@@ -16,7 +16,8 @@ public enum MensagensExcecao {
     INSCRICAO_JA_CANCELADA("Inscrição já cancelada Para o email: "),
     TAG_EM_USO("A tag está sendo utilizada, não é possível excluí-la. Quantidade de conteúdos: "),
     TAG_NAO_ENCONTRADA("Tag não encontrada"),
-    NOME_TAG_INVALIDO("Nome da tag fornecida é inválido. Ele não deve ser vazio ou conter caracteres especiais");
+    NOME_TAG_INVALIDO("Nome da tag fornecida é inválido. Ele não deve ser vazio ou conter caracteres especiais"),
+    REGISTRO_NAO_ENCONTRADO("Registro não encontrado");
 
     private final String mensagem;
 
