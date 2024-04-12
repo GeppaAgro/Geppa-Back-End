@@ -98,7 +98,7 @@ public class TagsController {
         ));
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<RetornoPadraoDto> atualizar(@RequestBody TagCadastroDto tagDto, @PathVariable String id) {
         Tag tagAtualizada = atualizar.executar(Mapper.parseObject(tagDto, Tag.class), id);
 
