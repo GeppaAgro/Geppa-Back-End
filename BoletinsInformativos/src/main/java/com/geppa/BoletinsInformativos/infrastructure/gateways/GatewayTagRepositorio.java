@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class GatewayTagRepositorio {
@@ -34,5 +35,20 @@ public class GatewayTagRepositorio {
     public Optional<Tag> buscar(String nome) {
         Optional<TagModel> tagModel = tagRepositorio.findByNome(nome);
        return tagModel.map(tag -> Mapper.parseObject(tag, Tag.class));
+    }
+
+    public Optional<Tag> buscarPorId(UUID id) {
+        Optional<TagModel> tagModel = tagRepositorio.findById(id);
+        return tagModel.map(tag -> Mapper.parseObject(tag, Tag.class));
+    }
+
+    public Optional<Tag> buscarDuplicado(Tag tag) {
+        Optional<TagModel> tagModel = tagRepositorio.findByNome(tag.getNome());
+        return tagModel.map(tagmd -> Mapper.parseObject(tagmd, Tag.class));
+    }
+
+    public Tag salvar(Tag tag) {
+        TagModel tagModel = Mapper.parseObject(tag, TagModel.class);
+        return Mapper.parseObject(tagRepositorio.save(tagModel), Tag.class);
     }
 }
