@@ -7,4 +7,8 @@ public class BuscaInvalidaExcecao extends ExcecaoPersonalizada {
     public BuscaInvalidaExcecao() {
         super(MensagensExcecao.BUSCA_INVALIDA.getMensagem(), HttpStatus.BAD_REQUEST);
     }
+
+    public BuscaInvalidaExcecao(String motivo) {
+        super(MensagensExcecao.BUSCA_INVALIDA.getMensagem() + " - Motivo: " + motivo, HttpStatus.BAD_REQUEST);
+    }
 }

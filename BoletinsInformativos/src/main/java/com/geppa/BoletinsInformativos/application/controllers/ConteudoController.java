@@ -32,9 +32,9 @@ public class ConteudoController {
 
 
     @GetMapping
-    public ResponseEntity<RetornoPadraoDto> getUltimosConteudos(@RequestParam int quantidade) {
+    public ResponseEntity<RetornoPadraoDto> getUltimosConteudos(@RequestParam int size) {
 
-        List<Conteudo> conteudos = ultimosConteudos.executar(quantidade);
+        List<Conteudo> conteudos = ultimosConteudos.executar(size);
         List<ConteudoDto> conteudosDto = Mapper.parseListObjects(conteudos, ConteudoDto.class);
 
         RetornoPadraoDto retornoSucessoDto = new RetornoPadraoDto(
@@ -46,9 +46,9 @@ public class ConteudoController {
     }
 
     @GetMapping("/ultimos-por-conteudo")
-    public ResponseEntity<RetornoPadraoDto> getUltimosConteudosPorConteudo(@RequestParam int quantidade) {
+    public ResponseEntity<RetornoPadraoDto> getUltimosConteudosPorConteudo(@RequestParam int size) {
 
-        HashMap<String, List<Conteudo>> ultimosConteudos = ultimosConteudosPorTipoConteudo.executar(quantidade);
+        HashMap<String, List<Conteudo>> ultimosConteudos = ultimosConteudosPorTipoConteudo.executar(size);
 
         HashMap<String, List<UltimoConteudoDto>> ultimosConteudosDto = new HashMap<>();
         ultimosConteudos.forEach((k, v) -> {
