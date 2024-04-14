@@ -3,6 +3,7 @@ package com.geppa.BoletinsInformativos.domain.useCases.tags;
 import com.geppa.BoletinsInformativos.domain.classes.Tag;
 import com.geppa.BoletinsInformativos.domain.exceptions.BuscaInvalidaExcecao;
 import com.geppa.BoletinsInformativos.infrastructure.gateways.GatewayTagRepositorio;
+import com.geppa.BoletinsInformativos.util.enums.messages.MensagensExcecao;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,14 @@ public class BuscarTagPorNome {
 
     public List<Tag> executar(String nome) {
 
-        if (nome == null || nome.isEmpty())
-            throw new BuscaInvalidaExcecao("Nome da tag não pode ser nulo ou vazio");
+        if (nome == null || nome.isEmpty() || !nome.matches("^[a-zA-Z0-9 ]*$"))
+            throw new BuscaInvalidaExcecao(MensagensExcecao.NOME_TAG_INVALIDO.getMensagem());
 
-        if (!nome.matches("^[a-zA-Z0-9]*$"))
-            throw new BuscaInvalidaExcecao("Nome da tag contém caracteres inválidos. Apenas letras e números são permitidos.");
+        List<Tag> tags = gatewayTagRepositorio.consultarPorNome(nome);
+        if (tags.isEmpty())
+            throw new BuscaInvalidaExcecao(MensagensExcecao.TAG_NAO_ENCONTRADA.getMensagem());
 
-        return gatewayTagRepositorio.consultarPorNome(nome);
+        return tags;
     }
 
 }

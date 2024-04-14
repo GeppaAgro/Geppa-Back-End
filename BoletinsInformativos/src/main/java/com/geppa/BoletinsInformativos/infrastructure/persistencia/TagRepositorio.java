@@ -25,4 +25,8 @@ public interface TagRepositorio extends RepositorioGenerico<TagModel> {
 
     @Query("SELECT t FROM TagModel t WHERE LOWER(t.nome) = LOWER(?1)")
     Optional<TagModel> findByNome(String nome);
+
+    @Query("SELECT COUNT(c) FROM ConteudoModel c JOIN c.tags t WHERE t = ?1")
+    Long verificaUtilizacaoDeTagPorConteudos(TagModel tag);
+
 }

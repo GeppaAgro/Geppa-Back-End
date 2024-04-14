@@ -1,17 +1,16 @@
 package com.geppa.BoletinsInformativos.application.controllers;
 
-import com.geppa.BoletinsInformativos.application.dtos.cadastro.InscricaoNewsletterCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.cadastro.TagCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
-import com.geppa.BoletinsInformativos.application.dtos.retorno.InscricaoNewsletterDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.TagDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
-import com.geppa.BoletinsInformativos.domain.classes.InscricaoNewsletter;
 import com.geppa.BoletinsInformativos.domain.classes.Tag;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.Cadastrar;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.tags.AtualizarTag;
 import com.geppa.BoletinsInformativos.domain.useCases.tags.BuscarTagPorNome;
+import com.geppa.BoletinsInformativos.domain.useCases.tags.DeletarTag;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import org.springframework.data.domain.Page;
@@ -32,17 +31,22 @@ public class TagsController {
 
     private final BuscarTagPorNome buscarPorNome;
     private final ConsultarTodos consultarTodos;
+    private final DeletarTag deletarTag;
     private final Cadastrar cadastrar;
+    private final AtualizarTag atualizar;
 
-    public TagsController(BuscarTagPorNome buscarPorNome, ConsultarTodos consultarTodos, Cadastrar cadastrar) {
+    public TagsController(BuscarTagPorNome buscarPorNome, ConsultarTodos consultarTodos,
+                          Cadastrar cadastrar, DeletarTag deletarTag, AtualizarTag atualizar) {
         this.buscarPorNome = buscarPorNome;
         this.consultarTodos = consultarTodos;
         this.cadastrar = cadastrar;
+        this.deletarTag = deletarTag;
+        this.atualizar = atualizar;
     }
 
-    @GetMapping("/buscarPorNome")
-    public ResponseEntity<RetornoPadraoDto> buscarPorNome(@RequestParam String nomeTag) {
-        List<Tag> tags = buscarPorNome.executar(nomeTag);
+    @GetMapping("/{nome}")
+    public ResponseEntity<RetornoPadraoDto> buscarPorNome(@PathVariable String nome) {
+        List<Tag> tags = buscarPorNome.executar(nome);
 
         return ResponseEntity.ok(new RetornoPadraoDto(
                 MensagensRetorno.BUSCA_REALIZADA_COM_SUCESSO.getMensagem(),
@@ -82,6 +86,27 @@ public class TagsController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(tag.getId()).toUri();
         return ResponseEntity.created(location).body(resposta);
+    }
+
+    @DeleteMapping("/{nome}")
+    public ResponseEntity<RetornoPadraoDto> deletar(@PathVariable String nome) {
+        deletarTag.executar(nome);
+
+        return ResponseEntity.ok(new RetornoPadraoDto(
+                MensagensRetorno.TAG_DELETADA_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value()
+        ));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RetornoPadraoDto> atualizar(@RequestBody TagCadastroDto tagDto, @PathVariable String id) {
+        Tag tagAtualizada = atualizar.executar(Mapper.parseObject(tagDto, Tag.class), id);
+
+        return ResponseEntity.ok(new RetornoPadraoDto(
+                MensagensRetorno.TAG_ATUALIZADA_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value(),
+                Mapper.parseObject(tagAtualizada, TagDto.class)
+        ));
     }
 
 }
