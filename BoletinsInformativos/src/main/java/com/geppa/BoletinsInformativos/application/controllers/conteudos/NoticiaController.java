@@ -1,5 +1,6 @@
 package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.NoticiaCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.NoticiaDto;
@@ -8,6 +9,7 @@ import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Noticia;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 
@@ -25,10 +27,12 @@ public class NoticiaController {
 
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
+    private final ValidarConteudo validarConteudo;
 
-    public NoticiaController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos) {
+    public NoticiaController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
+        this.validarConteudo = validarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -48,7 +52,7 @@ public class NoticiaController {
     @GetMapping
     public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
                                                                     @ModelAttribute FiltroGenericoDto filtro) {
-        Page<Noticia> noticias = consultarTodos.executar(pageable,filtro, Noticia.class);
+        Page<Noticia> noticias = consultarTodos.executar(pageable, filtro, Noticia.class);
         Page<NoticiaDto> noticiasDtos = noticias.map(noticia -> Mapper.parseObject(noticia, NoticiaDto.class));
 
 //        TODO: adicionar hateoas aos conteudos
@@ -67,6 +71,13 @@ public class NoticiaController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, noticias);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+    @PostMapping("/validar")
+    public ResponseEntity<RetornoPadraoDto> validarNoticia(@RequestBody NoticiaCadastroDto noticiaDto) {
+        Noticia noticia = Mapper.parseObject(noticiaDto, Noticia.class);
+        validarConteudo.executar(noticia);
+        return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
 
 
