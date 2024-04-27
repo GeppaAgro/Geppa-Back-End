@@ -1,5 +1,6 @@
 package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.CursoCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.CursoDto;
@@ -8,6 +9,7 @@ import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Curso;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
@@ -24,10 +26,12 @@ public class CursoController {
 
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
+    private final ValidarConteudo validarConteudo;
 
-    public CursoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos) {
+    public CursoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
+        this.validarConteudo = validarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -47,7 +51,7 @@ public class CursoController {
     @GetMapping
     public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
                                                                     @ModelAttribute FiltroGenericoDto filtro) {
-        Page<Curso> cursos = consultarTodos.executar(pageable,filtro, Curso.class);
+        Page<Curso> cursos = consultarTodos.executar(pageable, filtro, Curso.class);
         Page<CursoDto> cursosDtos = cursos.map(curso -> Mapper.parseObject(curso, CursoDto.class));
 
 //        TODO: adicionar hateoas aos conteudos
@@ -63,8 +67,16 @@ public class CursoController {
                 pageable.getSort().toString()
         );
 
-        HateoasPaginacao.addHateoas(retornoSucessoDto,cursos);
+        HateoasPaginacao.addHateoas(retornoSucessoDto, cursos);
 
         return ResponseEntity.ok(retornoSucessoDto);
     }
+
+    @PostMapping("/validar")
+    public ResponseEntity<RetornoPadraoDto> validarCurso(@RequestBody CursoCadastroDto cursoCadastroDto) {
+        Curso curso = Mapper.parseObject(cursoCadastroDto, Curso.class);
+        validarConteudo.executar(curso);
+        return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
+    }
+
 }
