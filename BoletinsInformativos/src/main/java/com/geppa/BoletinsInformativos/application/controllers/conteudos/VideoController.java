@@ -1,5 +1,6 @@
 package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.VideoCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.VideoDto;
@@ -8,6 +9,7 @@ import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Video;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
@@ -24,10 +26,12 @@ public class VideoController {
 
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
+    private final ValidarConteudo validarConteudo;
 
-    public VideoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos) {
+    public VideoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
+        this.validarConteudo = validarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -66,5 +70,13 @@ public class VideoController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, videos);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+
+    @PostMapping("/validar")
+    public ResponseEntity<RetornoPadraoDto> validarVideo(@RequestBody VideoCadastroDto videoDto) {
+        Video video = Mapper.parseObject(videoDto, Video.class);
+        validarConteudo.executar(video);
+        return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
 }

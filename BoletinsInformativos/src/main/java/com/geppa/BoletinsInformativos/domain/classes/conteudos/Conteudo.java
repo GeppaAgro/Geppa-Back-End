@@ -16,7 +16,6 @@ public abstract class Conteudo {
 
     private UUID id;
 
-    @NotNull(message = "{conteudo.boletimInformativo.notNull}")
     private BoletimInformativo boletimInformativo;
 
     @NotEmpty(message = "{conteudo.titulo.notEmpty}")
