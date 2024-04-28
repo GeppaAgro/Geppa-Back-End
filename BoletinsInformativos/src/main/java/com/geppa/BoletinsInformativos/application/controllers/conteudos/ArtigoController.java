@@ -1,5 +1,6 @@
 package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.ArtigoCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.ArtigoDto;
@@ -9,6 +10,7 @@ import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Artigo;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
@@ -25,10 +27,12 @@ public class ArtigoController {
 
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
+    private final ValidarConteudo validarConteudo;
 
-    public ArtigoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos) {
+    public ArtigoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
+        this.validarConteudo = validarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -68,5 +72,12 @@ public class ArtigoController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, artigos);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+    @PostMapping("/validar")
+    public ResponseEntity<RetornoPadraoDto> validarArtigo(@RequestBody ArtigoCadastroDto artigoCadastroDto) {
+        Artigo artigo = Mapper.parseObject(artigoCadastroDto, Artigo.class);
+        validarConteudo.executar(artigo);
+        return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
 }
