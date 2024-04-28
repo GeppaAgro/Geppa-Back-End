@@ -11,8 +11,8 @@ public class Autor {
     private UUID id;
     private Artigo artigo;
 
-    @NotNull(message = "O nome do autor é obrigatório")
-    @Size(min = 3, message = "O nome do autor deve ter pelo menos 3 caracteres")
+    @NotNull(message = "{autor.nome.notNull}")
+    @Size(min = 3, message = "{autor.nome.size}")
     private String nome;
 
     public UUID getId() {

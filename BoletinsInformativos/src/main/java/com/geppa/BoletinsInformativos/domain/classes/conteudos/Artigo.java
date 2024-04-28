@@ -11,12 +11,12 @@ import java.util.List;
 
 public class Artigo extends Conteudo {
 
-    @NotNull(message = "A data de publicação é obrigatória")
-    @FutureOrPresent(message = "A data de publicação deve ser no futuro ou presente")
+    @NotNull(message = "{artigo.dataPublicacao.notNull}")
+    @FutureOrPresent(message = "{artigo.dataPublicacao.futureOrPresent}")
     private LocalDate dataPublicacao;
 
-    @NotNull(message = "Os autores são obrigatórios")
-    @Size(min = 1, message = "Deve haver pelo menos um autor")
+    @NotNull(message = "{artigo.autores.notNull}")
+    @Size(min = 1, message = "{artigo.autores.size}")
     private List<Autor> autores = new ArrayList<>();
 
     public LocalDate getDataPublicacao() {
