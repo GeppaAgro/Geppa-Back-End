@@ -1,23 +1,12 @@
-package com.geppa.BoletinsInformativos.domain.classes.conteudos;
-
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+package com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos;
 
 import java.time.LocalDateTime;
 
-public class Evento extends Conteudo {
+public class EventoCadastroDto extends ConteudoCadastroDto {
 
-    @Size(min = 5, message = "{evento.local.size}")
     private String local;
-
-    @Positive(message = "{evento.preco.positive}")
     private Double preco;
-
-    @FutureOrPresent(message = "{evento.dataHoraInicio.futureOrPresent}")
     private LocalDateTime dataHoraInicio;
-
-    @FutureOrPresent(message = "{evento.dataHoraFim.futureOrPresent}")
     private LocalDateTime dataHoraFim;
 
     public String getLocal() {

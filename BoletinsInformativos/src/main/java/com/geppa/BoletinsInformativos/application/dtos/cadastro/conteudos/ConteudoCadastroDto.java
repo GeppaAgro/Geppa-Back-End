@@ -6,22 +6,12 @@ import com.geppa.BoletinsInformativos.application.dtos.retorno.TagDto;
 import java.util.List;
 
 public abstract class ConteudoCadastroDto {
-
-    private BoletimInformativoCadastroDto boletimInformativo;
     private String titulo;
     private String descricao;
     private String link;
     private List<TagDto> tags;
 
     public ConteudoCadastroDto() {
-    }
-
-    public BoletimInformativoCadastroDto getBoletimInformativo() {
-        return boletimInformativo;
-    }
-
-    public void setBoletimInformativo(BoletimInformativoCadastroDto boletimInformativo) {
-        this.boletimInformativo = boletimInformativo;
     }
 
     public String getTitulo() {

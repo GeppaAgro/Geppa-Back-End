@@ -1,13 +1,17 @@
 package com.geppa.BoletinsInformativos.application.controllers.conteudos;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.EventoCadastroDto;
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos.NoticiaCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.EventoDto;
 import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Evento;
+import com.geppa.BoletinsInformativos.domain.classes.conteudos.Noticia;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
@@ -24,10 +28,12 @@ public class EventoController {
 
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
+    private final ValidarConteudo validarConteudo;
 
-    public EventoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos) {
+    public EventoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
+        this.validarConteudo = validarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -47,7 +53,7 @@ public class EventoController {
     @GetMapping
     public ResponseEntity<RetornoPadraoComPaginacaoDto> buscarTodos(@PageableDefault(sort = "dataCadastro", direction = Sort.Direction.DESC) Pageable pageable,
                                                                     @ModelAttribute FiltroGenericoDto filtro) {
-        Page<Evento> eventos = consultarTodos.executar(pageable,filtro, Evento.class);
+        Page<Evento> eventos = consultarTodos.executar(pageable, filtro, Evento.class);
         Page<EventoDto> eventosDtos = eventos.map(evento -> Mapper.parseObject(evento, EventoDto.class));
 
 //        TODO: adicionar hateoas aos conteudos
@@ -66,6 +72,13 @@ public class EventoController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, eventos);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+    @PostMapping("/validar")
+    public ResponseEntity<RetornoPadraoDto> validarEvento(@RequestBody EventoCadastroDto eventoCadastroDto) {
+        Evento evento = Mapper.parseObject(eventoCadastroDto, Evento.class);
+        validarConteudo.executar(evento);
+        return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
 
 }
