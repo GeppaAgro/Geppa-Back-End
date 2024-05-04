@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 public class Noticia extends Conteudo {
 
-    @NotNull(message = "{noticia.data_publicacao.obrigatorio}")
+    @NotNull(message = "{noticia.dataPublicacao.notNull}")
     @Past(message = "{noticia.dataPublicacao.past}")
     private LocalDate dataPublicacao;
 

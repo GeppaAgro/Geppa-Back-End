@@ -4,8 +4,8 @@ public class AutorCadastroDto {
 
     private String nome;
 
-    public AutorCadastroDto(String nome) {
-        this.nome = nome;
+    public AutorCadastroDto() {
+
     }
 
     public String getNome() {
