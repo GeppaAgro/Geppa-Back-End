@@ -2,6 +2,7 @@ package com.geppa.BoletinsInformativos.domain.classes.conteudos;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public class Evento extends Conteudo {
     @Size(min = 5, message = "{evento.local.size}")
     private String local;
 
-    @Positive(message = "{evento.preco.positive}")
+    @PositiveOrZero(message = "{evento.preco.positive}")
     private Double preco;
 
     @FutureOrPresent(message = "{evento.dataHoraInicio.futureOrPresent}")
