@@ -12,7 +12,8 @@ public enum MensagensRetorno {
         SUCESSO_CANCELAMENTO_NEWSLETTER("Cancelamento de inscrição realizado com sucesso"),
         TAG_CADASTRADA_SUCESSO("Tag cadastrada com sucesso"),
         TAG_DELETADA_COM_SUCESSO("Tag deletada com sucesso"),
-        TAG_ATUALIZADA_COM_SUCESSO("Tag atualizada com sucesso");
+        TAG_ATUALIZADA_COM_SUCESSO("Tag atualizada com sucesso"),
+        CONTEUDO_VALIDADO_COM_SUCESSO("Conteúdo validado com sucesso");
 
         private final String mensagem;
 

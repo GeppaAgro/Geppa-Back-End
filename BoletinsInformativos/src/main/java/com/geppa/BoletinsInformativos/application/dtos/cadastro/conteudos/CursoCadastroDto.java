@@ -1,21 +1,17 @@
-package com.geppa.BoletinsInformativos.domain.classes.conteudos;
-
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
+package com.geppa.BoletinsInformativos.application.dtos.cadastro.conteudos;
 
 import java.time.LocalDateTime;
 
-public class Curso extends Conteudo {
-
-    @FutureOrPresent(message = "{curso.prazoInscricao.futureOrPresent}")
+public class CursoCadastroDto extends ConteudoCadastroDto {
     private LocalDateTime prazoInscricao;
-
-    @PositiveOrZero(message = "{curso.preco.positive}")
     private Double preco;
-
-    @Positive(message = "{curso.duracaoEmHoras.positive}")
     private Integer duracaoEmHoras;
+
+    public CursoCadastroDto(LocalDateTime prazoInscricao, Double preco, Integer duracaoEmHoras) {
+        this.prazoInscricao = prazoInscricao;
+        this.preco = preco;
+        this.duracaoEmHoras = duracaoEmHoras;
+    }
 
     public LocalDateTime getPrazoInscricao() {
         return prazoInscricao;
