@@ -12,6 +12,6 @@ public class TagCadastroDto extends RepresentationModel<TagCadastroDto> {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome.trim();
     }
 }

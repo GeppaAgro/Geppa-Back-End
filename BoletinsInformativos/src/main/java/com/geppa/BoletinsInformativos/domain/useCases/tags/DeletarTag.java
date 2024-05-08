@@ -20,10 +20,10 @@ public class DeletarTag {
     }
 
     public void executar(String nome) {
-        if (nome == null || nome.isEmpty() || !nome.matches("^[a-zA-Z0-9 ]*$"))
+        if (nome == null || nome.isEmpty())
             throw new DelecaoInvalidaExcecao(MensagensExcecao.NOME_TAG_INVALIDO.getMensagem());
 
-        Optional<Tag> tagOptional = gatewayTagRepositorio.buscar(nome);
+        Optional<Tag> tagOptional = gatewayTagRepositorio.buscar(nome.trim());
         if (tagOptional.isEmpty()) {
             throw new DelecaoInvalidaExcecao(MensagensExcecao.TAG_NAO_ENCONTRADA.getMensagem());
         }
