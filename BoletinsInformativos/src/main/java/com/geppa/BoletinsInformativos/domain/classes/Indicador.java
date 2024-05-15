@@ -1,5 +1,9 @@
 package com.geppa.BoletinsInformativos.domain.classes;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -7,8 +11,14 @@ public class Indicador {
 
     private UUID id;
     private BoletimInformativo boletimInformativo;
+    @NotBlank(message = "{indicador.nome.notBlank}")
     private String nome;
+
+    @NotBlank(message = "{indicador.nome.unidadeMedida.notBlank}")
     private String unidadeMedida;
+
+    @NotNull(message = "{indicador.nome.valor.notNull}")
+    @Positive(message = "{indicador.nome.valor.positive}")
     private Double valor;
     private LocalDate data;
 
