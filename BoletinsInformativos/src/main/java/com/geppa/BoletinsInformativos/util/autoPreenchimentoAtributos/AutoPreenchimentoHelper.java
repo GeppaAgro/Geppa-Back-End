@@ -13,12 +13,16 @@ import java.time.Instant;
 public class AutoPreenchimentoHelper {
 
     public void preencherAtributosComAnnotation(Object entity, Class<? extends Annotation> annotationType) {
-        Field[] fields = entity.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            Annotation annotation = field.getAnnotation(annotationType);
-            if (annotation != null) {
-                preencherAtributo(entity, field, annotationType, annotation);
+        Class<?> currentClass = entity.getClass();
+        while (currentClass!= null) {
+            Field[] fields = currentClass.getDeclaredFields();
+            for (Field field : fields) {
+                Annotation annotation = field.getAnnotation(annotationType);
+                if (annotation!= null) {
+                    preencherAtributo(entity, field, annotationType, annotation);
+                }
             }
+            currentClass = currentClass.getSuperclass();
         }
     }
 
