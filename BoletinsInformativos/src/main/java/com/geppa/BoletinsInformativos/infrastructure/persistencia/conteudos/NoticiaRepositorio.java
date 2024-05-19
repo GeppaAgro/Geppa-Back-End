@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NoticiaRepositorio extends RepositorioGenerico<NoticiaModel> {
+
+    default Class<NoticiaModel> getClasseModelo() {
+        return NoticiaModel.class;
+    }
 }

@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CursoRepositorio extends RepositorioGenerico<CursoModel> {
+
+    default Class<CursoModel> getClasseModelo() {
+        return CursoModel.class;
+    }
 }

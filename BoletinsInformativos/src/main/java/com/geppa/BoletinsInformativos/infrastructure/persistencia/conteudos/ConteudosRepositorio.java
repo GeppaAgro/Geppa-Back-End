@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConteudosRepositorio extends RepositorioGenerico<ConteudoModel> {
 
+    default Class<ConteudoModel> getClasseModelo() {
+        return ConteudoModel.class;
+    }
+
 }
