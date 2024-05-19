@@ -7,6 +7,7 @@ import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.Noticia
 import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Noticia;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.AtualizarConteudo;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
@@ -28,11 +29,14 @@ public class NoticiaController {
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
     private final ValidarConteudo validarConteudo;
+    private final AtualizarConteudo atualizarConteudo;
 
-    public NoticiaController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
+    public NoticiaController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos,
+                             ValidarConteudo validarConteudo, AtualizarConteudo atualizarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
         this.validarConteudo = validarConteudo;
+        this.atualizarConteudo = atualizarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -80,5 +84,15 @@ public class NoticiaController {
         return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<RetornoPadraoDto> atualizar(@RequestBody NoticiaCadastroDto noticiaCadastroDto, @PathVariable String id) {
+        Noticia noticiaAtualizada = atualizarConteudo.executar(Mapper.parseObject(noticiaCadastroDto, Noticia.class), Noticia.class, id);
+
+        return ResponseEntity.ok(new RetornoPadraoDto(
+                MensagensRetorno.CONTEUDO_ATUALIZADO_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value(),
+                Mapper.parseObject(noticiaAtualizada, NoticiaDto.class)
+        ));
+    }
 
 }

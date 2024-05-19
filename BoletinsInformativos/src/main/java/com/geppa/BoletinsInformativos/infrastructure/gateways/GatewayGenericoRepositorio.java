@@ -89,5 +89,16 @@ public class GatewayGenericoRepositorio<T> {
                 });
     }
 
+    public Optional<T> buscarPorId(UUID id) {
+        return repository.findById(id)
+                .map(contentModel -> {
+                    try {
+                        return Mapper.parseObject(contentModel, entityType);
+                    } catch (Exception e) {
+                        throw new MapperExcecao(MensagensExcecao.FALHA_CONVERSAO_MODELO_DOMINIO.getMensagem());
+                    }
+                });
+    }
+
 
 }

@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArtigoRepositorio extends RepositorioGenerico<ArtigoModel> {
+    default Class<ArtigoModel> getClasseModelo() {
+        return ArtigoModel.class;
+    }
 }
