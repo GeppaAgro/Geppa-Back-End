@@ -1,6 +1,13 @@
 package com.geppa.BoletinsInformativos.domain.classes;
 
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.*;
+import com.geppa.BoletinsInformativos.util.annotations.AutoPreenchimentoAtualizacao;
+import com.geppa.BoletinsInformativos.util.annotations.AutoPreenchimentoCadastro;
+import com.geppa.BoletinsInformativos.util.enums.TipoPreenchimento;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -12,13 +19,32 @@ public class BoletimInformativo {
     private UUID id;
     private String edicao;
     private LocalDate dataPublicacao;
+
+    @AutoPreenchimentoAtualizacao(TipoPreenchimento.INSTANT)
     private Instant dataAtualizacao;
+
+    @AutoPreenchimentoCadastro(TipoPreenchimento.INSTANT)
     private Instant dataCadastro;
+
+    @Valid
     private List<Artigo> artigos = new ArrayList<>();
+
+    @Valid
     private List<Curso> cursos = new ArrayList<>();
+
+    @Valid
     private List<Evento> eventos = new ArrayList<>();
+
+    @NotNull(message = "{boletim.noticias.notNull}")
+    @Size(min = 1, message = "{boletim.noticias.size}")
+    @Valid
     private List<Noticia> noticias = new ArrayList<>();
+
+    @Valid
     private List<Video> videos = new ArrayList<>();
+
+    @NotNull(message = "{boletim.indicadores.notNull}")
+    @Size(min = 1, message = "{boletim.indicadores.size}")
     private List<Indicador> indicadores = new ArrayList<>();
 
     public BoletimInformativo() {
