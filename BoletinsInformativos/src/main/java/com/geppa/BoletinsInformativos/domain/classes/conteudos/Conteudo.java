@@ -2,6 +2,8 @@ package com.geppa.BoletinsInformativos.domain.classes.conteudos;
 
 import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.classes.Tag;
+import com.geppa.BoletinsInformativos.util.annotations.AutoPreenchimentoCadastro;
+import com.geppa.BoletinsInformativos.util.enums.TipoPreenchimento;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +31,8 @@ public abstract class Conteudo {
     @NotEmpty(message = "{conteudo.link.notEmpty}")
     @URL(message = "{conteudo.link.url}")
     private String link;
+
+    @AutoPreenchimentoCadastro(TipoPreenchimento.INSTANT)
     private Instant dataCadastro;
     private Instant dataAtualizacao;
 
