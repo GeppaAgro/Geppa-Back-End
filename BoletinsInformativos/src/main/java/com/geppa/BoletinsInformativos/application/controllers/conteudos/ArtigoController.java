@@ -8,6 +8,7 @@ import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto
 
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Artigo;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.AtualizarConteudo;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
@@ -28,11 +29,14 @@ public class ArtigoController {
     private final ConsultaPorHash consultaPorHash;
     private final ConsultarTodos consultarTodos;
     private final ValidarConteudo validarConteudo;
+    private final AtualizarConteudo atualizarConteudo;
 
-    public ArtigoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos, ValidarConteudo validarConteudo) {
+    public ArtigoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos,
+                            ValidarConteudo validarConteudo, AtualizarConteudo atualizarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
         this.validarConteudo = validarConteudo;
+        this.atualizarConteudo = atualizarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -80,4 +84,16 @@ public class ArtigoController {
         validarConteudo.executar(artigo);
         return ResponseEntity.ok(new RetornoPadraoDto(MensagensRetorno.CONTEUDO_VALIDADO_COM_SUCESSO.getMensagem(), HttpStatus.OK.value()));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RetornoPadraoDto> atualizar(@RequestBody ArtigoCadastroDto artigoCadastroDto, @PathVariable String id) {
+        Artigo artigoAtualizado = atualizarConteudo.executar(Mapper.parseObject(artigoCadastroDto, Artigo.class), Artigo.class, id);
+
+        return ResponseEntity.ok(new RetornoPadraoDto(
+                MensagensRetorno.CONTEUDO_ATUALIZADO_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value(),
+                Mapper.parseObject(artigoAtualizado, ArtigoDto.class)
+        ));
+    }
+
 }

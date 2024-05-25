@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VideoRepositorio extends RepositorioGenerico<VideoModel> {
+
+    default Class<VideoModel> getClasseModelo() {
+        return VideoModel.class;
+    }
 }

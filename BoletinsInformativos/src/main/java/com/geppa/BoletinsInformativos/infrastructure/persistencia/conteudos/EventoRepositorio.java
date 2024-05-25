@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EventoRepositorio extends RepositorioGenerico<EventoModel> {
+
+    default Class<EventoModel> getClasseModelo() {
+        return EventoModel.class;
+    }
 }
