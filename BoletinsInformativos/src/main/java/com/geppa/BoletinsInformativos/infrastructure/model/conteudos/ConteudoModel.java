@@ -109,4 +109,9 @@ public abstract class ConteudoModel {
     public void setTags(List<TagModel> tags) {
         this.tags = tags;
     }
+
+    public void substituirInstanciaTag(TagModel tagOriginal, TagModel tagNova){
+        tags.remove(tagOriginal);
+        tags.add(tagNova);
+    }
 }
