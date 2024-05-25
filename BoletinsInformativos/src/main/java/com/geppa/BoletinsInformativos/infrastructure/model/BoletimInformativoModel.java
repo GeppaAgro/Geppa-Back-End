@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -137,4 +138,15 @@ public class BoletimInformativoModel {
     public void setIndicadores(List<IndicadorModel> indicadores) {
         this.indicadores = indicadores;
     }
+
+    public List<ConteudoModel> getConteudos() {
+        List<ConteudoModel> conteudos = new ArrayList<>();
+        conteudos.addAll(artigos);
+        conteudos.addAll(cursos);
+        conteudos.addAll(eventos);
+        conteudos.addAll(noticias);
+        conteudos.addAll(videos);
+        return conteudos;
+    }
+
 }
