@@ -1,5 +1,6 @@
 package com.geppa.BoletinsInformativos.application.controllers;
 
+import com.geppa.BoletinsInformativos.application.dtos.cadastro.BoletimInformativoCadastroDto;
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoComPaginacaoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.BoletimInformativoCompletoDto;
 import com.geppa.BoletinsInformativos.application.dtos.retorno.BoletimInformativoDto;
@@ -7,6 +8,7 @@ import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
+import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.CadastroBoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.ConsultaBoletimPorEdicao;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
@@ -28,10 +30,13 @@ public class BoletimController {
 
     private final ConsultaBoletimPorEdicao consultaBoletimPorEdicao;
     private final ConsultarTodos consultarTodos;
+    private final CadastroBoletimInformativo cadastroBoletimInformativo;
 
-    public BoletimController(ConsultaBoletimPorEdicao consultaBoletimPorEdicao, ConsultarTodos consultarTodos) {
+    public BoletimController(ConsultaBoletimPorEdicao consultaBoletimPorEdicao, ConsultarTodos consultarTodos,
+                             CadastroBoletimInformativo cadastroBoletimInformativo) {
         this.consultaBoletimPorEdicao = consultaBoletimPorEdicao;
         this.consultarTodos = consultarTodos;
+        this.cadastroBoletimInformativo = cadastroBoletimInformativo;
     }
 
     @GetMapping("/{edicao}")
@@ -70,6 +75,20 @@ public class BoletimController {
         HateoasPaginacao.addHateoas(retornoSucessoDto, boletimInformativoDtos);
 
         return ResponseEntity.ok(retornoSucessoDto);
+    }
+
+    @PostMapping
+    public ResponseEntity<RetornoPadraoDto> salvar(@RequestBody BoletimInformativoCadastroDto boletimInformativoDto) {
+        BoletimInformativo boletimInformativo = Mapper.parseObject(boletimInformativoDto, BoletimInformativo.class);
+        BoletimInformativo boletimInformativoSalvo = cadastroBoletimInformativo.executar(boletimInformativo);
+
+        RetornoPadraoDto retornoSucessoDto = new RetornoPadraoDto(
+                MensagensRetorno.BOLETIM_CADASTRADO_COM_SUCESSO.getMensagem(),
+                HttpStatus.CREATED.value(),
+                Mapper.parseObject(boletimInformativoSalvo, BoletimInformativoCompletoDto.class)
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(retornoSucessoDto);
     }
 
 }
