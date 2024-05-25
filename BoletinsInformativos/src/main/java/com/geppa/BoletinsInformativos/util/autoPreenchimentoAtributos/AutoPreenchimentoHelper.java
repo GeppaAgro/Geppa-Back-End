@@ -8,17 +8,37 @@ import org.springframework.stereotype.Component;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Collection;
 
 @Component
 public class AutoPreenchimentoHelper {
 
     public void preencherAtributosComAnnotation(Object entity, Class<? extends Annotation> annotationType) {
-        Field[] fields = entity.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            Annotation annotation = field.getAnnotation(annotationType);
-            if (annotation != null) {
-                preencherAtributo(entity, field, annotationType, annotation);
+        Class<?> currentClass = entity.getClass();
+        while (currentClass!= null &&!currentClass.equals(Object.class)) {
+            Field[] fields = currentClass.getDeclaredFields();
+            for (Field field : fields) {
+                try {
+                    field.setAccessible(true);
+
+                    if (Collection.class.isAssignableFrom(field.getType())) {
+                        Collection fieldValue = (Collection) field.get(entity);
+
+                        for (Object item : fieldValue) {
+                            preencherAtributosComAnnotation(item, annotationType);
+                        }
+                    } else {
+                        Annotation annotation = field.getAnnotation(annotationType);
+                        if (annotation!= null) {
+                            preencherAtributo(entity, field, annotationType, annotation);
+                        }
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException("Erro ao preencher campos", e);
+                }
             }
+            currentClass = currentClass.getSuperclass();
         }
     }
 
@@ -46,6 +66,8 @@ public class AutoPreenchimentoHelper {
                 booleanValue = field.getAnnotation(AutoPreenchimentoAtualizacao.class).booleanValue();
             }
             field.set(entity, booleanValue);
+        } else if (tipo == TipoPreenchimento.DATE && field.getType() == LocalDate.class) {
+            field.set(entity, LocalDate.now());
         }
     }
 
