@@ -1,5 +1,7 @@
 package com.geppa.BoletinsInformativos.domain.classes;
 
+import com.geppa.BoletinsInformativos.util.annotations.AutoPreenchimentoCadastro;
+import com.geppa.BoletinsInformativos.util.enums.TipoPreenchimento;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -20,6 +22,8 @@ public class Indicador {
     @NotNull(message = "{indicador.nome.valor.notNull}")
     @Positive(message = "{indicador.nome.valor.positive}")
     private Double valor;
+
+    @AutoPreenchimentoCadastro(TipoPreenchimento.DATE)
     private LocalDate data;
 
     public Indicador() {
