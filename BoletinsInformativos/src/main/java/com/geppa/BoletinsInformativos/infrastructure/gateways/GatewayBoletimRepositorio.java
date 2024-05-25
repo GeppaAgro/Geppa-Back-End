@@ -3,14 +3,12 @@ package com.geppa.BoletinsInformativos.infrastructure.gateways;
 import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.exceptions.MapperExcecao;
 import com.geppa.BoletinsInformativos.domain.exceptions.ValidacaoTagNaoEncontradaExcecao;
+import com.geppa.BoletinsInformativos.infrastructure.model.AutorModel;
 import com.geppa.BoletinsInformativos.infrastructure.model.BoletimInformativoModel;
 import com.geppa.BoletinsInformativos.infrastructure.model.IndicadorModel;
 import com.geppa.BoletinsInformativos.infrastructure.model.TagModel;
 import com.geppa.BoletinsInformativos.infrastructure.model.conteudos.*;
-import com.geppa.BoletinsInformativos.infrastructure.persistencia.BoletimInformativoRepositorio;
-import com.geppa.BoletinsInformativos.infrastructure.persistencia.ConteudoRepositorio;
-import com.geppa.BoletinsInformativos.infrastructure.persistencia.IndicadoresRepositorio;
-import com.geppa.BoletinsInformativos.infrastructure.persistencia.TagRepositorio;
+import com.geppa.BoletinsInformativos.infrastructure.persistencia.*;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensExcecao;
 import org.springframework.stereotype.Service;
@@ -25,14 +23,18 @@ public class GatewayBoletimRepositorio {
     private final TagRepositorio tagRepositorio;
     private final IndicadoresRepositorio indicadorRepositorio;
     private final ConteudoRepositorio conteudoRepositorio;
+    private final AutorRepositorio autorRepositorio;
 
     public GatewayBoletimRepositorio(BoletimInformativoRepositorio boletimInformativoRepositorio,
                                      TagRepositorio tagRepositorio,
-                                     IndicadoresRepositorio indicadorRepositorio, ConteudoRepositorio conteudoRepositorio) {
+                                     IndicadoresRepositorio indicadorRepositorio,
+                                     ConteudoRepositorio conteudoRepositorio,
+                                     AutorRepositorio autorRepositorio) {
         this.boletimInformativoRepositorio = boletimInformativoRepositorio;
         this.tagRepositorio = tagRepositorio;
         this.indicadorRepositorio = indicadorRepositorio;
         this.conteudoRepositorio = conteudoRepositorio;
+        this.autorRepositorio = autorRepositorio;
     }
 
     public Optional<BoletimInformativo> buscarPorEdicao(String edicao) {
@@ -54,6 +56,7 @@ public class GatewayBoletimRepositorio {
 
         associarConteudos(boletimInformativoSalvo);
         associarIndicadores(boletimInformativoSalvo);
+        associarAutoresArtigo(boletimInformativoSalvo.getArtigos());
 
         return Mapper.parseObject(boletimInformativoSalvo, BoletimInformativo.class);
     }
@@ -87,6 +90,17 @@ public class GatewayBoletimRepositorio {
         for (ConteudoModel conteudo : conteudosParaAssociar) {
             conteudo.setBoletimInformativo(boletimInformativoModel);
             conteudoRepositorio.save(conteudo);
+        }
+    }
+
+    private void associarAutoresArtigo(List<ArtigoModel> artigosParaAssociar) {
+        if (artigosParaAssociar.isEmpty()) return;
+        for (ArtigoModel artigo : artigosParaAssociar) {
+            List<AutorModel> autores = artigo.getAutores();
+            for (AutorModel autor : autores) {
+                autor.setArtigo(artigo);
+                autorRepositorio.save(autor);
+            }
         }
     }
 }
