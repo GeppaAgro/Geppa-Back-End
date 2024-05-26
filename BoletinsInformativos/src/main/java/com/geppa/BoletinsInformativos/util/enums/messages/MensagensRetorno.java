@@ -15,7 +15,8 @@ public enum MensagensRetorno {
         TAG_ATUALIZADA_COM_SUCESSO("Tag atualizada com sucesso"),
         CONTEUDO_VALIDADO_COM_SUCESSO("Conteúdo validado com sucesso"),
         INDICADOR_VALIDADO_COM_SUCESSO("Indicador validado com sucesso"),
-        BOLETIM_CADASTRADO_COM_SUCESSO("Boletim Informativo cadastrado com successo");
+        BOLETIM_CADASTRADO_COM_SUCESSO("Boletim Informativo cadastrado com successo"),
+        SUCESSO_ENVIO_EMAILS("E-mails enviados com sucesso");
 
         private final String mensagem;
 

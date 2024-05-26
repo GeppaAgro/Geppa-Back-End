@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
 
-@Entity(name = "inscricao_newsletter")
+@Entity
+@Table(name = "inscricao_newsletter")
 public class InscricaoNewsletterModel {
 
     @Id
