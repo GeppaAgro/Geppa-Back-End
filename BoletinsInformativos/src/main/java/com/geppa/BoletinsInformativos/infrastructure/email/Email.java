@@ -31,7 +31,7 @@ public class Email {
 
             mimeMessageHelper.setSubject("GEPPA - Boletim Informativo - " + LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             mimeMessageHelper.setFrom(remetente);
-            mimeMessageHelper.setTo(destinatarios);
+            mimeMessageHelper.setBcc(destinatarios);
 
             mimeMessageHelper.setText(body, true);
 
