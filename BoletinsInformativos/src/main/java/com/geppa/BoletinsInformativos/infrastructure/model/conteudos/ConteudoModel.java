@@ -37,7 +37,7 @@ public abstract class ConteudoModel {
     @Column(name = "con_data_atualizacao")
     private Instant dataAtualizacao;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "con_tags",
             joinColumns = @JoinColumn(name = "con_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
