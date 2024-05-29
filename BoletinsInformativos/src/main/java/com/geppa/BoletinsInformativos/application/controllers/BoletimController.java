@@ -10,6 +10,7 @@ import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.BoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.CadastroBoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.ConsultaBoletimPorEdicao;
+import com.geppa.BoletinsInformativos.domain.useCases.boletimInformativo.DeletarBoletimInformativo;
 import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
@@ -31,12 +32,14 @@ public class BoletimController {
     private final ConsultaBoletimPorEdicao consultaBoletimPorEdicao;
     private final ConsultarTodos consultarTodos;
     private final CadastroBoletimInformativo cadastroBoletimInformativo;
+    private final DeletarBoletimInformativo deletarBoletimInformativo;
 
     public BoletimController(ConsultaBoletimPorEdicao consultaBoletimPorEdicao, ConsultarTodos consultarTodos,
-                             CadastroBoletimInformativo cadastroBoletimInformativo) {
+                             CadastroBoletimInformativo cadastroBoletimInformativo, DeletarBoletimInformativo deletarBoletimInformativo) {
         this.consultaBoletimPorEdicao = consultaBoletimPorEdicao;
         this.consultarTodos = consultarTodos;
         this.cadastroBoletimInformativo = cadastroBoletimInformativo;
+        this.deletarBoletimInformativo = deletarBoletimInformativo;
     }
 
     @GetMapping("/{edicao}")
@@ -89,6 +92,16 @@ public class BoletimController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(retornoSucessoDto);
+    }
+
+    @DeleteMapping("/{edicao}")
+    public ResponseEntity<RetornoPadraoDto> deletar(@PathVariable String edicao) {
+        deletarBoletimInformativo.executar(edicao);
+        RetornoPadraoDto retornoSucessoDto = new RetornoPadraoDto(
+                MensagensRetorno.BOLETIM_DELETADO_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value()
+        );
+        return ResponseEntity.ok(retornoSucessoDto);
     }
 
 }

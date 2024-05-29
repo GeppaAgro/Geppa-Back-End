@@ -103,5 +103,9 @@ public class GatewayBoletimRepositorio {
             }
         }
     }
+
+    public void deletar(BoletimInformativo boletimInformativo) {
+        boletimInformativoRepositorio.delete(Mapper.parseObject(boletimInformativo, BoletimInformativoModel.class));
+    }
 }
 
