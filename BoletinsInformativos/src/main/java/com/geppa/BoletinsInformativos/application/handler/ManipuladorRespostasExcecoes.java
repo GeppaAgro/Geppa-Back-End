@@ -2,6 +2,7 @@ package com.geppa.BoletinsInformativos.application.handler;
 
 import com.geppa.BoletinsInformativos.application.dtos.padrao.RetornoPadraoDto;
 import com.geppa.BoletinsInformativos.domain.exceptions.ExcecaoPersonalizada;
+import com.geppa.BoletinsInformativos.domain.exceptions.InvalidJwtAuthenticationException;
 import com.geppa.BoletinsInformativos.domain.exceptions.ValidacaoExcecao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +10,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,4 +48,11 @@ public class ManipuladorRespostasExcecoes extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(respostaExcecao, exception.getStatus());
     }
 
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<RetornoPadraoDto> handleInvalidJwtAuthenticationExceptionExceptions(Exception ex, WebRequest request) {
+        RetornoPadraoDto exceptionResponse = new RetornoPadraoDto(
+                ex.getMessage(),
+                HttpStatus.FORBIDDEN.value());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+    }
 }

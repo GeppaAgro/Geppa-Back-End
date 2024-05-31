@@ -17,7 +17,10 @@ public enum MensagensExcecao {
     TAG_EM_USO("A tag esta sendo utilizada, não e possível exclui-la. Quantidade de conteúdos: "),
     TAG_NAO_ENCONTRADA("Tag não encontrada"),
     NOME_TAG_INVALIDO("Nome da tag fornecida é inválido. Ele não deve ser vazio"),
-    REGISTRO_NAO_ENCONTRADO("Registro não encontrado");
+    REGISTRO_NAO_ENCONTRADO("Registro não encontrado"),
+    CREDENCIAIS_INVALIDAS("Credenciais inválidas"),
+    USUARIO_NAO_ENCONTRADO("Usuário não encontrado");
+
 
     private final String mensagem;
 
