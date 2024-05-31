@@ -17,7 +17,9 @@ public enum MensagensRetorno {
         INDICADOR_VALIDADO_COM_SUCESSO("Indicador validado com sucesso"),
         BOLETIM_CADASTRADO_COM_SUCESSO("Boletim Informativo cadastrado com successo"),
         SUCESSO_ENVIO_EMAILS("E-mails enviados com sucesso"),
-        BOLETIM_DELETADO_COM_SUCESSO("Boletim deletado com sucesso");
+        BOLETIM_DELETADO_COM_SUCESSO("Boletim deletado com sucesso"),
+        AUTEHTICACAO_SUCESSO("Autenticacao realizada com sucesso"),
+        REFRESH_TOKEN_SUCESSO("Refresh token realizado com sucesso");
 
         private final String mensagem;
 
