@@ -11,7 +11,7 @@ public class UltimoConteudoDto {
     private UUID id;
     private String descricao;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "America/Sao_Paulo")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "America/Sao_Paulo")
     private Instant dataCadastro;
 
     public UltimoConteudoDto() {
