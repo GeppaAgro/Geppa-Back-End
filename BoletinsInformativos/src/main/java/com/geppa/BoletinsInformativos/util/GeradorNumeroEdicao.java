@@ -13,8 +13,9 @@ public abstract class GeradorNumeroEdicao {
 
         Random random = new Random();
         char letraAleatoria = (char) ('A' + random.nextInt(26));
+        char letraAleatoria2 = (char) ('A' + random.nextInt(26));
 
-        return String.format("%02d%02d%d%c", dia, mes, ano % 100, letraAleatoria);
+        return String.format("%02d%02d%d%c%c", dia, mes, ano % 100, letraAleatoria, letraAleatoria2);
     }
 }
 

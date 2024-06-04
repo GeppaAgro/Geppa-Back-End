@@ -13,6 +13,7 @@ import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensExcecao;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,17 +64,22 @@ public class GatewayBoletimRepositorio {
 
 
     private void associarTagsConteudos(BoletimInformativoModel boletimInformativo) {
-        List<ConteudoModel> conteudos = boletimInformativo.getConteudos();
-        for (ConteudoModel conteudo : conteudos) {
-            List<TagModel> tags = conteudo.getTags();
-            for (TagModel tag : tags) {
-                List<TagModel> tagsEncontradas = tagRepositorio.consultarPorNome(tag.getNome().toLowerCase());
-                if (tagsEncontradas.isEmpty()) {
-                    throw new ValidacaoTagNaoEncontradaExcecao(tag.getNome());
+
+        try {
+            List<ConteudoModel> conteudos = boletimInformativo.getConteudos();
+            for (ConteudoModel conteudo : conteudos) {
+                List<TagModel> tagsCopy = new ArrayList<>(conteudo.getTags());
+                for (TagModel tag : tagsCopy) {
+                    List<TagModel> tagsEncontradas = tagRepositorio.consultarPorNome(tag.getNome().toLowerCase());
+                    if (tagsEncontradas.isEmpty()) {
+                        throw new ValidacaoTagNaoEncontradaExcecao(tag.getNome());
+                    }
+                    TagModel tagComAssociacao = tagsEncontradas.get(0);
+                    conteudo.substituirInstanciaTag(tag, tagComAssociacao);
                 }
-                TagModel tagComAssociacao = tagsEncontradas.get(0);
-                conteudo.substituirInstanciaTag(tag, tagComAssociacao);
             }
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao associar tags e conteudos");
         }
     }
 
