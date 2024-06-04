@@ -18,20 +18,24 @@ public class Email {
     @Value("${spring.mail.username}")
     private String remetente;
 
+    @Value("${url-cancelamento-inscricao}")
+    private String linkCancelarInscricao;
+
 
     public Email(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
 
-    public void sendEmail(String[] destinatarios, String body) {
+    public void sendEmail(String destinatario, String body) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
-
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            body = body.replace("link-cancelamento-inscricao", linkCancelarInscricao + destinatario);
 
             mimeMessageHelper.setSubject("GEPPA - Boletim Informativo - " + LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")));
             mimeMessageHelper.setFrom(remetente);
-            mimeMessageHelper.setBcc(destinatarios);
+            mimeMessageHelper.setBcc(destinatario);
 
             mimeMessageHelper.setText(body, true);
 
