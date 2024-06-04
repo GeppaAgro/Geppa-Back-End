@@ -16,3 +16,5 @@ spring:
 
 cors:
   originPatterns: "http://localhost:80,http://localhost:3000,https://restapi.com,http://localhost:5173"
+
+url-cancelamento-inscricao: ${URL_CANCELAMENTO_INSCRICAO:http://localhost:5173/cancelamento-inscricao/}

@@ -41,7 +41,7 @@ public class EnvioEmails {
                 emails.add(inscricao.getEmail());
             }
 
-            emailService.sendEmail(emails.toArray(new String[0]), body);
+            emails.forEach(email -> emailService.sendEmail(email, body));
 
             pagina++;
             pageable = PageRequest.of(pagina, tamanhoPagina);
