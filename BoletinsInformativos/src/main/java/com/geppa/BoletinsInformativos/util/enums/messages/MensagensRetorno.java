@@ -19,7 +19,8 @@ public enum MensagensRetorno {
         SUCESSO_ENVIO_EMAILS("E-mails enviados com sucesso"),
         BOLETIM_DELETADO_COM_SUCESSO("Boletim deletado com sucesso"),
         AUTEHTICACAO_SUCESSO("Autenticacao realizada com sucesso"),
-        REFRESH_TOKEN_SUCESSO("Refresh token realizado com sucesso");
+        REFRESH_TOKEN_SUCESSO("Refresh token realizado com sucesso"),
+        CONTEUDO_DELETADO_COM_SUCESSO("Conteúdo deletado com sucesso");
 
         private final String mensagem;
 

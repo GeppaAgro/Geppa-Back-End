@@ -100,5 +100,7 @@ public class GatewayGenericoRepositorio<T> {
                 });
     }
 
-
+    public void deletar(T objeto) {
+        repository.delete(Mapper.parseObject(objeto, repository.getClasseModelo()));
+    }
 }
