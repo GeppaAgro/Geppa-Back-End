@@ -43,9 +43,9 @@ public class NewsletterController {
         return ResponseEntity.created(location).body(resposta);
     }
 
-    @DeleteMapping("/cancelar-inscricao")
-    public ResponseEntity<RetornoPadraoDto> cancelarInscricao(@RequestBody InscricaoNewsletterCadastroDto newsletterDto) {
-        InscricaoNewsletter inscricaoNewsletterCancelata = cancelarInscricaoNewsletter.executar(newsletterDto.getEmail());
+    @DeleteMapping("/cancelar-inscricao/{email}")
+    public ResponseEntity<RetornoPadraoDto> cancelarInscricao(@PathVariable String email) {
+        InscricaoNewsletter inscricaoNewsletterCancelata = cancelarInscricaoNewsletter.executar(email);
         RetornoPadraoDto resposta = new RetornoPadraoDto(MensagensRetorno.SUCESSO_CANCELAMENTO_NEWSLETTER.getMensagem(), 200,
                 Mapper.parseObject(inscricaoNewsletterCancelata, InscricaoNewsletterDto.class));
         return ResponseEntity.ok(resposta);
