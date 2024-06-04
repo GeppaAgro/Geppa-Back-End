@@ -7,10 +7,7 @@ import com.geppa.BoletinsInformativos.application.dtos.retorno.conteudos.CursoDt
 import com.geppa.BoletinsInformativos.application.dtos.filters.FiltroGenericoDto;
 import com.geppa.BoletinsInformativos.application.hateoas.HateoasPaginacao;
 import com.geppa.BoletinsInformativos.domain.classes.conteudos.Curso;
-import com.geppa.BoletinsInformativos.domain.useCases.genericos.AtualizarConteudo;
-import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultaPorHash;
-import com.geppa.BoletinsInformativos.domain.useCases.genericos.ConsultarTodos;
-import com.geppa.BoletinsInformativos.domain.useCases.genericos.ValidarConteudo;
+import com.geppa.BoletinsInformativos.domain.useCases.genericos.*;
 import com.geppa.BoletinsInformativos.util.mapper.Mapper;
 import com.geppa.BoletinsInformativos.util.enums.messages.MensagensRetorno;
 import org.springframework.data.domain.Page;
@@ -29,13 +26,16 @@ public class CursoController {
     private final ConsultarTodos consultarTodos;
     private final ValidarConteudo validarConteudo;
     private final AtualizarConteudo atualizarConteudo;
+    private final DeletarConteudo deletarConteudo;
 
     public CursoController(ConsultaPorHash consultaPorHash, ConsultarTodos consultarTodos,
-                           ValidarConteudo validarConteudo, AtualizarConteudo atualizarConteudo) {
+                           ValidarConteudo validarConteudo, AtualizarConteudo atualizarConteudo,
+                           DeletarConteudo deletarConteudo) {
         this.consultaPorHash = consultaPorHash;
         this.consultarTodos = consultarTodos;
         this.validarConteudo = validarConteudo;
         this.atualizarConteudo = atualizarConteudo;
+        this.deletarConteudo = deletarConteudo;
     }
 
     @GetMapping("/{hash}")
@@ -92,6 +92,14 @@ public class CursoController {
                 HttpStatus.OK.value(),
                 Mapper.parseObject(cursoAtualizado, CursoDto.class)
         ));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<RetornoPadraoDto> deletar(@PathVariable String id) {
+        deletarConteudo.executar(id, Curso.class);
+        return ResponseEntity.ok(new RetornoPadraoDto(
+                MensagensRetorno.CONTEUDO_DELETADO_COM_SUCESSO.getMensagem(),
+                HttpStatus.OK.value()));
     }
 
 }
