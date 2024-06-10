@@ -13,6 +13,7 @@ public class UltimoConteudoDto {
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX", timezone = "America/Sao_Paulo")
     private Instant dataCadastro;
+    private String link;
 
     public UltimoConteudoDto() {
     }
@@ -39,6 +40,14 @@ public class UltimoConteudoDto {
 
     public void setDataCadastro(Instant dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 
 }
