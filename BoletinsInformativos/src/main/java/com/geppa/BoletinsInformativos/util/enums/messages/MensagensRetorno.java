@@ -20,7 +20,9 @@ public enum MensagensRetorno {
         BOLETIM_DELETADO_COM_SUCESSO("Boletim deletado com sucesso"),
         AUTEHTICACAO_SUCESSO("Autenticacao realizada com sucesso"),
         REFRESH_TOKEN_SUCESSO("Refresh token realizado com sucesso"),
-        CONTEUDO_DELETADO_COM_SUCESSO("Conteúdo deletado com sucesso");
+        CONTEUDO_DELETADO_COM_SUCESSO("Conteúdo deletado com sucesso"),
+        INDICADOR_ATUALIZADO_COM_SUCESSO("Indicador atualizado com sucesso"),
+        INDICADOR_DELETADO_COM_SUCESSO("Indicador deletado com sucesso");
 
         private final String mensagem;
 
